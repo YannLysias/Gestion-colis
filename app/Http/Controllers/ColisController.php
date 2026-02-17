@@ -18,12 +18,12 @@ class ColisController extends Controller
      */
     public function index()
     {
-        $colis = Colis::all();
+        $colis = Colis::orderBy('created_at', 'desc')->paginate(10);
+
         return view('colis.list_colis', [
             "colis" => $colis,
         ]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -71,7 +71,9 @@ class ColisController extends Controller
         $codeColis = 'FIH' . str_pad($lastId, 5, '0', STR_PAD_LEFT) . $currentYear;
 
         // 2. Calcul automatique du montant
-        $montant = $request->poid * 9;
+
+        $prixKilo = $request->prix_kilo;
+        $montant = $request->poid * $prixKilo;
 
 
         $path_photo_convert_to_table = null;

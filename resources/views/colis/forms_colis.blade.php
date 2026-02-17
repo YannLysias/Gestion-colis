@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
 	<link rel="stylesheet" href="/../assets/css/ready.css">
 	<link rel="stylesheet" href="/../assets/css/demo.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="wrapper">
@@ -32,7 +33,7 @@
                                                 <h5 class="text-primary">Informations de l'expéditeur</h5>
                                                     <div class="form-group">
                                                         <label for="client_id">Selectionner un Client <span style="color:red">*</span></label>
-                                                        <select name="client_id" class="form-control" required>
+                                                        <select name="client_id" class="form-control select2" required>
                                                             <option value="" disabled selected>-- Selectionne --</option>
                                                             @foreach ($clients as $client)
                                                             <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>
@@ -40,14 +41,14 @@
                                                             </option>
                                                             @endforeach
                                                         </select>
-                                                    @error('client_id')
-                                                        <div class="d-block text-danger">{{$message}}</div>
-                                                    @enderror
+                                                        @error('client_id')
+                                                            <div class="d-block text-danger">{{$message}}</div>
+                                                        @enderror
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label for="agence_id">Agence de réception <span style="color:red">*</span></label>
-                                                        <select name="agence_transfert_id" class="form-control" required>
+                                                        <select name="agence_transfert_id" class="form-control select2" required>
                                                             <option value="" disabled selected>-- Choisir une agence --</option>
                                                             @foreach ($agences as $agence)
                                                             <option value="{{ $agence->id }}" {{ old('agences_transfert_id') == $agence->id ? 'selected' : '' }}>
@@ -66,13 +67,28 @@
                                                 <h5 class="text-primary">Détails du colis</h5>
 
                                                 <div class="form-group">
-                                                    <label>Poids (Kg) <span style="color:red">*</span></label>
-                                                    <input type="number" step="0.01" name="poid" value="{{ old('poid') }}" id="poid" class="form-control" oninput="calculerMontant()" required>
-                                                    @error('poid')
-                                                        <div class="d-block text-danger">{{$message}}</div>
-                                                    @enderror
-                                                    <span id="montant_dollar">0 $</span>
+                                                    <label>Prix par Kg ($) <span style="color:red">*</span></label>
+                                                    <select name="prix_kilo" id="prix_kilo" class="form-control" onchange="calculerMontant()" required>
+                                                        <option value="8">8 $</option>
+                                                        <option value="9" selected>9 $</option>
+                                                        <option value="10">10 $</option>
+                                                    </select>
                                                 </div>
+
+                                                <div class="form-group">
+                                                    <label>Poids (Kg) <span style="color:red">*</span></label>
+                                                    <input type="number"
+                                                        step="0.01"
+                                                        name="poid"
+                                                        id="poid"
+                                                        class="form-control"
+                                                        oninput="calculerMontant()"
+                                                        required>
+
+                                                    <span id="montant_dollar" class="d-block mt-2 font-weight-bold">0 $</span>
+                                                </div>
+
+                                                <input type="hidden" name="montant" id="montant">
 
                                                 <div class="form-group">
                                                     <label>Paiement <span style="color:red">*</span></label>
@@ -171,9 +187,20 @@
 <script src="/../assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="/../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="/../assets/js/ready.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: "Sélectionner une option",
+            allowClear: true,
+            width: '100%'
+        });
+    });
+</script>
 
+<script>
     // Prévisualisation de la photo
     function previewPhoto(event) {
         let reader = new FileReader();
@@ -195,13 +222,16 @@
     // }
 
     function calculerMontant() {
-        let poid = parseFloat(document.getElementById("poid").value);
-        let montant = 0;
-        if (!isNaN(poid)) {
-            montant = poid * 9; // 1 Kg = 9$
-        }
-        document.getElementById("montant_dollar").innerText = montant.toLocaleString('en-US') + " $";
+        let poids = parseFloat(document.getElementById('poid').value) || 0;
+        let prixKilo = parseFloat(document.getElementById('prix_kilo').value) || 0;
+
+        let montant = poids * prixKilo;
+
+        document.getElementById('montant_dollar').innerText = montant.toFixed(2) + " $";
+        document.getElementById('montant').value = montant.toFixed(2);
     }
+
+
 
 </script>
 

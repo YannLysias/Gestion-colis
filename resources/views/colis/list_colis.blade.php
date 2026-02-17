@@ -10,6 +10,15 @@
 	<link rel="stylesheet" href="/../assets/css/ready.css">
 	<link rel="stylesheet" href="/../assets/css/demo.css">
 </head>
+<style>
+    .pagination {
+        font-size: 12px;
+    }
+
+    .page-link {
+        padding: 4px 8px;
+    }
+</style>
 <body>
 	<div class="wrapper">
 		<div class="main-header">
@@ -42,7 +51,6 @@
 										<div class="table-responsive">
 											<table class="table table-bordered">
 												<thead>
-
 													<tr>
 														<th>#</th>
 														<th>Numéro</th>
@@ -58,7 +66,7 @@
 												<tbody>
                                                 @foreach ($colis as $index => $coli)
 													<tr>
-														<th scope="row">{{$index + 1}}</th>
+														<th scope="row">{{ $colis->firstItem() + $index }}</th>
 														<td>{{ $coli->code_colis}}</td>
 														<td>{{ $coli->destinateur_nom}}</td>
 														<td>{{ $coli->destinateur_telephone}}</td>
@@ -80,8 +88,12 @@
                                                         </td>
 													</tr>
                                                 @endforeach
+
 												</tbody>
 											</table>
+                                            <div class="d-flex justify-content-center mt-3">
+                                                {{ $colis->links('pagination::bootstrap-4') }}
+                                            </div>
 										</div>
 									</div>
 								</div>

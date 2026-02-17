@@ -10,6 +10,15 @@
 	<link rel="stylesheet" href="/../assets/css/ready.css">
 	<link rel="stylesheet" href="/../assets/css/demo.css">
 </head>
+<style>
+    .pagination {
+        font-size: 12px;
+    }
+
+    .page-link {
+        padding: 4px 8px;
+    }
+</style>
 <body>
 	<div class="wrapper">
 		<div class="main-header">
@@ -60,7 +69,7 @@
                                                     @foreach ($users as $index => $user)
                                                         @if (Auth::user()->role !== 'Secretaire' || $user->role === 'Client')
                                                         <tr>
-                                                            <th scope="row">{{ $index + 1 }}</th>
+                                                            <th scope="row">{{ $users->firstItem() + $index }}</th>
                                                             <td>{{ $user->name }}</td>
                                                             <td>{{ $user->prenom }}</td>
                                                             <td>{{ $user->sexe }}</td>
@@ -88,6 +97,9 @@
                                                     @endforeach
                                                 </tbody>
 											</table>
+                                            <div class="d-flex justify-content-center mt-3">
+                                                {{ $users->links('pagination::bootstrap-4') }}
+                                            </div>
 										</div>
 									</div>
 								</div>

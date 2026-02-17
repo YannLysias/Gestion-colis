@@ -6,6 +6,7 @@ use App\Models\AgenceTransfert;
 use App\Models\Colis;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class UsersController extends Controller
 {
@@ -14,8 +15,10 @@ class UsersController extends Controller
      */
     public function index()
     {
-        // $users = User::all();
-        $users = User::where('role', 'Client')->get();
+        $users = User::where('role', 'Client')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(10);
+
         return view('user.user', [
             "users" => $users,
         ]);
@@ -109,7 +112,34 @@ public function stat()
     $clients = User::where('role', 'Client')->count();
     $agences = AgenceTransfert::count();
 
-    return view('dashboard', compact('colisEnregistres', 'colisLivres', 'colisEnAttente', 'colisEnCours', 'secretaire', 'clients', 'agences'));
+    $caJour = Colis::whereDate('created_at', Carbon::today())
+                ->where('paiement', 'payé')
+                ->sum('montant');
+
+    $caSemaine = Colis::whereBetween('created_at', [
+                    Carbon::now()->startOfWeek(),
+                    Carbon::now()->endOfWeek()
+                ])
+                ->where('paiement', 'payé')
+                ->sum('montant');
+
+     $caMois = Colis::whereMonth('created_at', Carbon::now()->month)
+                    ->whereYear('created_at', Carbon::now()->year)
+                    ->where('paiement', 'payé')
+                    ->sum('montant');
+
+        // 📦 Montant total de tous les colis
+    $montantTotal = Colis::sum('montant');
+
+    // 🚚 Montant des colis envoyés (ex: statut = en_cours)
+    $montantEnvoyes = Colis::where('statut', 'en_cours')
+                            ->sum('montant');
+
+    // ✅ Montant des colis livrés
+    $montantLivres = Colis::where('statut', 'livre')
+                           ->sum('montant');
+
+    return view('dashboard', compact('colisEnregistres', 'colisLivres', 'colisEnAttente', 'colisEnCours', 'secretaire', 'clients', 'agences', 'caJour', 'caSemaine', 'caMois', 'montantTotal', 'montantEnvoyes', 'montantLivres'));
 }
 
 
