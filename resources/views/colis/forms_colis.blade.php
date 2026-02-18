@@ -24,28 +24,22 @@
                                 <div class="card-header text-white">
                                     <h4 class="card-title mb-0">Formulaire</h4>
                                 </div>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="card-body">
-                                    <form action="/colis/list_colis" method="POST" id="form-colis">
+                                    <form action="/colis/list_colis" method="POST" id="form-colis" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row">
                                             {{-- COLONNE 1 : Informations du client (expéditeur) --}}
                                             <div class="col-md-6">
                                                 <h5 class="text-primary">Informations de l'expéditeur</h5>
-                                                    <div class="form-group">
-                                                        <label for="client_id">Selectionner un Client <span style="color:red">*</span></label>
-                                                        <select name="client_id" class="form-control select2" required>
-                                                            <option value="" disabled selected>-- Selectionne --</option>
-                                                            @foreach ($clients as $client)
-                                                            <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>
-                                                                {{ $client->name }} {{ $client->prenom }}
-                                                            </option>
-                                                            @endforeach
-                                                        </select>
-                                                        @error('client_id')
-                                                            <div class="d-block text-danger">{{$message}}</div>
-                                                        @enderror
-                                                    </div>
-
                                                     <div class="form-group">
                                                         <label for="agence_id">Agence de réception <span style="color:red">*</span></label>
                                                         <select name="agence_transfert_id" class="form-control select2" required>
@@ -57,6 +51,20 @@
                                                             @endforeach
                                                         </select>
                                                         @error('agence_transfert_id')
+                                                            <div class="d-block text-danger">{{$message}}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="client_id">Selectionner un Client <span style="color:red">*</span></label>
+                                                        <select name="client_id" class="form-control select2" required>
+                                                            <option value="" disabled selected>-- Selectionne --</option>
+                                                            @foreach ($clients as $client)
+                                                            <option value="{{ $client->id }}" {{ old('client_id') == $client->id ? 'selected' : '' }}>
+                                                                {{ $client->name }} {{ $client->prenom }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('client_id')
                                                             <div class="d-block text-danger">{{$message}}</div>
                                                         @enderror
                                                     </div>
@@ -142,16 +150,14 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Photo du colis</label>
-                                                    <input type="file" name="photo_colis" id="photo_colis" class="form-control"
-                                                        accept="image/*" capture="environment" onchange="previewPhoto(event)" value="{{ old('photo_colis') }}">
+                                                    <input type="file" name="photo" id="photo" class="form-control"
+                                                        accept="image/*" capture="environment" onchange="previewPhoto(event)" value="{{ old('photo') }}">
 
                                                     <!-- Zone d’aperçu -->
                                                     <div class="mt-2">
                                                         <img id="photo_preview" src="" alt="Aperçu de la photo" style="max-width: 200px; display: none; border: 1px solid #ccc; padding: 5px; border-radius: 5px;">
                                                     </div>
-
-                                                    @error('photo_colis')
-
+                                                    @error('photo')
                                                         <div class="d-block text-danger">{{$message}}</div>
                                                     @enderror
                                                 </div>

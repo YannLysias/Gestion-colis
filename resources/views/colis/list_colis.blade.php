@@ -54,8 +54,8 @@
 													<tr>
 														<th>#</th>
 														<th>Numéro</th>
-														<th>Nom destinateur</th>
-														<th>Tél destinateur</th>
+														<th>Nom Destinataire</th>
+														<th>Tél Destinataire</th>
 														<th>poid</th>
 														<th>Montant</th>
 														<th>Paiement</th>

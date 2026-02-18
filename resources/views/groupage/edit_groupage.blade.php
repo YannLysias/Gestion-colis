@@ -48,7 +48,7 @@
                                 <li class="list-group-item"><strong>Montant :</strong> {{ number_format($colis->montant, 0, ',', ' ') }} $</li>
                             </div>
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Destinataire Email :</strong> {{ $colis->destinateur_email }}</li>
+                                <li class="list-group-item"><strong>Destinateur Email :</strong> {{ $colis->destinateur_email }}</li>
                             </div>
                         </div>
 
@@ -62,7 +62,7 @@
                                 @enderror
                             </div>
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Destinataire Nom :</strong> {{ $colis->destinateur_nom }} {{ $colis->destinateur_prenom }}</li>
+                                <li class="list-group-item"><strong>Destinateur Nom :</strong> {{ $colis->destinateur_nom }} {{ $colis->destinateur_prenom }}</li>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -70,7 +70,7 @@
                                 <li class="list-group-item"><strong>Statut :</strong> {{ ucfirst(str_replace('_', ' ', $colis->statut)) }}</li>
                             </div>
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Destinataire N° téléphone:</strong> {{ $colis->destinateur_telephone }}</li>
+                                <li class="list-group-item"><strong>Destinateur N° téléphone:</strong> {{ $colis->destinateur_telephone }}</li>
                             </div>
                         </div>
 

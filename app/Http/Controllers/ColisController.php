@@ -63,6 +63,7 @@ class ColisController extends Controller
             'destinateur_email' => 'nullable|string|max:255',
             'destinateur_telephone' => 'required|string|max:255',
             'paiement' => 'required|in:payé,non_payé',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // 1. Génération de l’ID personnalisé du colis
@@ -76,17 +77,19 @@ class ColisController extends Controller
         $montant = $request->poid * $prixKilo;
 
 
-        $path_photo_convert_to_table = null;
+        $photo_name = null;
+
         if ($request->hasFile('photo')) {
-            $path_photo = $request->file('photo')->store('public/photos');
+            $photo = $request->file('photo');
 
-            $path_photo_convert_to_table = explode('/', $path_photo);
+            // Génère un nom unique pour éviter les collisions
+            $photo_name = time() . '_' . $photo->getClientOriginalName();
 
-            $photo_name = isset($path_photo_convert_to_table[2]) ? $path_photo_convert_to_table[2] : null;
-
+            // Stocke dans storage/app/public/photos
+            $photo->storeAs('public/photos', $photo_name);
         }
 
-        $colis = Colis::create([
+         $colis = Colis::create([
             'user_id' => Auth::id(),
             'client_id' =>  $request->client_id,
             'agence_transfert_id' => $request->agence_transfert_id,
@@ -100,9 +103,8 @@ class ColisController extends Controller
             'destinateur_email' => $request->destinateur_email,
             'destinateur_telephone' => $request->destinateur_telephone,
             'code_colis' => $codeColis,
-            'photo' => $photo_name ?? null
+            'photo' => $photo_name ?? null,
         ]);
-
 
         return redirect('colis/list_colis')->with('success', 'Colis ajouté avec succès.');
     }
@@ -146,6 +148,12 @@ class ColisController extends Controller
 
         $colis = Colis::findOrFail($id);
 
+        if ($request->statut === 'livré' && $request->paiement === 'non_payé') {
+            return back()->withErrors([
+                'statut' => 'Impossible de livrer un colis non payé.'
+            ])->withInput();
+        }
+
         $colis->update([
 
             // 'user_id' => Auth::id(),
@@ -161,7 +169,8 @@ class ColisController extends Controller
             'destinateur_telephone' => $request->destinateur_telephone,
             'montant' => $request->poid * 9, // recalcul automatique
         ]);
-        return redirect('colis/list_colis')->with('success', 'Colis modifié avec succès.');
+
+        return back()->with('success', 'Colis modifié avec succès.');
     }
 
     /**

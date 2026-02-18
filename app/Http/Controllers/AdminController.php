@@ -13,7 +13,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $users = User::where('role', 'Secretaire')->get();
+        $users = User::where('role', 'Secretaire')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(10);
+
         return view('user.user', [
             "users" => $users,
         ]);

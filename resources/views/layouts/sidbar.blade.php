@@ -108,8 +108,8 @@
 								<span class="badge badge-count"></span>
 							</a>
 						</li>
-                        <li class="nav-item">
-							<a href="#">
+                        <li class="nav-item {{ request()->routeIs('groupage.index') ? 'active' : '' }}">
+							<a href="{{ route('groupage.index') }}">
 								<i class="la la-truck"></i>
 								<p>
                                     Groupage

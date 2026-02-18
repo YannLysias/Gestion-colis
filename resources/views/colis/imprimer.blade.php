@@ -104,28 +104,29 @@
 
     {{-- Section Signature --}}
     <div class="section-title">Signatures</div>
-    <div class="row text-center signature-zone">
-        <div class="col-md-6">
-            <p class="mb-1">Client</p>
-            <div class="signature-line">Signature</div>
+    <div class="row signature-zone">
+        <div class="col-md-3">
+             <p class="mb-1">Client</p>
+             <div class="signature-line">Signature</div>
         </div>
-        <div class="col-md-6">
-            <p class="mb-1">Caissier / Secrétaire</p>
-            <div class="signature-line">Signature</div>
+        <div class="col-md-3">
+             <p class="mb-1">Caissier</p>
+             {{ Auth::user()->name }}
+             <div class="signature-line">Signature</div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
             <h6 class="fw-bold text-primary">RDC - Kinshasa</h6>
             <p>
                 📍 33 Av Force publique, Direction<br>
                 Gambela C/ KASA VUBU<br>
                 ☎️ +243 893 330 999 / +243 812 715 826
             </p>
-            <p class="small">Envoyez vos colis par tout en RD Congo en toute sécurité et honnêteté</p>
+            
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             <h6 class="fw-bold text-success">Bénin - Cotonou</h6>
             <p>
                 Chez Patrick ETINA<br>
@@ -135,6 +136,7 @@
             </p>
         </div>
     </div>
+    <p class="small text-center">Envoyez vos colis par tout en RD Congo en toute sécurité et honnêteté</p>
 
 
     {{-- Boutons --}}
