@@ -58,6 +58,7 @@
                                                         <th>Statut</th>
                                                         <th>Poids Total (kg)</th>
                                                         <th>Agence de reception</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -77,6 +78,21 @@
                                                         </td>
                                                         <td>{{ $groupage->poids_total }}</td>
                                                         <td>{{ $groupage->agence->nom }}</td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <i class="la la-ellipsis-v"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <a href="{{ route('groupage.show', $groupage->id) }}" class="dropdown-item">
+                                                                        <i class="la la-eye"></i> Voir les détails
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <button class="dropdown-item ouvrir-edit-modal" data-id="{{ $groupage->id }}" data-bs-toggle="modal" data-bs-target="#editGroupageModal" type="button"><i class="la la-edit" onclick="event.stopPropagation();"></i> Modifier</button>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
                                                     </tr>
 
                                                     <!-- Ligne collapse -->
@@ -152,31 +168,42 @@
 	</div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header bg-primary">
-				<h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body text-center">
-				<p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
-				<p>
-				<b>We'll let you know when it's done</b></p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
+{{-- Modal edit groupage --}}
+<div class="modal fade" id="editGroupageModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="form-edit-groupage" action="{{ route('groupage.updateStatut', $groupage->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifier le groupage N°{{ $groupage->code_groupage }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="statut" class="form-label">Statut</label>
+                        <select name="statut" id="statut" class="form-control" required>
+                            <option value="">Sélectionner un statut</option>
+                            <option value="en_cours">En cours</option>
+                            <option value="arrivé">arrivé</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Enregistrer</button>  
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+
 <!-- Modal Ajout Colis -->
 <div class="modal fade" id="ajouterColisModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="form-ajout-colis" action="{{ route('groupage.ajouterColis', $groupage->id) }}" method="POST">
+            <form id="form-ajout-colis" method="POST">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title">Ajouter des colis au groupage</h5>
@@ -240,6 +267,48 @@
         });
     });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var editModal = document.getElementById('editGroupageModal');
+
+        editModal.addEventListener('show.bs.modal', function (event) {
+
+            var button = event.relatedTarget;
+            var groupageId = button.getAttribute('data-id');
+
+            console.log("ID sélectionné:", groupageId);
+
+            var form = editModal.querySelector('form');
+
+            form.action = "/groupage/" + groupageId;
+
+        });
+
+    });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    let boutons = document.querySelectorAll(".ouvrir-modal");
+    let form = document.getElementById("form-ajout-colis");
+
+    boutons.forEach(function(btn) {
+        btn.addEventListener("click", function () {
+
+            let groupageId = this.getAttribute("data-id");
+
+            // Génère l'URL correcte selon ta route
+            form.action = "/groupage/" + groupageId + "/ajouter-colis";
+
+        });
+    });
+
+});
+</script>
+
 <script>
 	$('#displayNotif').on('click', function(){
 		var placementFrom = $('#notify_placement_from option:selected').val();

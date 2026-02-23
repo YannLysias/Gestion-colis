@@ -108,6 +108,31 @@ class GroupageController extends Controller
         return redirect()->route('groupage.index')->with('success', 'Groupage supprimé avec succès.');
     }
 
+    public function updateStatut($id)
+    {
+        $groupage = Groupage::findOrFail($id);
+dd($groupage);
+        // Déterminer le nouveau statut
+        if ($groupage->statut === 'en_attente') {
+            $nouveauStatut = 'en_cours';
+        } elseif ($groupage->statut === 'en_cours') {
+            $nouveauStatut = 'arrivé';
+        } else {
+            return back()->with('error', 'Le groupage est déjà arrivé.');
+        }
+
+        // Mettre à jour le groupage
+        $groupage->update([
+            'statut' => $nouveauStatut,
+        ]);
+
+        // Mettre à jour les colis avec le même statut
+        Colis::whereIn('code_colis', $groupage->colis_ids)
+            ->update(['statut' => $nouveauStatut]);
+
+        return back()->with('success', 'Statut mis à jour.');
+    }
+
     public function supprimerColisGrouper($groupageId, $codeColis)
     {
         $groupage = Groupage::findOrFail($groupageId);

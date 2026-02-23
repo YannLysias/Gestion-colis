@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/colis/search', [ColisController::class, 'search'])->name('colis.search');
     Route::delete('/groupage/{groupage}/colis/{code}', [GroupageController::class, 'supprimerColisGrouper'])->name('groupage.supprimerColisGrouper');
     Route::post('/groupage/{id}/ajouter-colis',[GroupageController::class, 'ajouterColis'])->name('groupage.ajouterColis');
+    Route::put('/groupage/{id}/update-statut', [GroupageController::class, 'updateStatut'])->name('groupage.updateStatut');
 
 
     Route::get('/colis/{id}/imprimer', [ColisController::class, 'imprimer'])->name('colis.imprimer');
