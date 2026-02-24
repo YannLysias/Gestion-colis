@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
+
+
 class UsersController extends Controller
 {
     /**
@@ -16,8 +18,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::where('role', 'Client')
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(10);
+                        ->orderBy('created_at', 'desc')->get();
 
         return view('user.user', [
             "users" => $users,
@@ -149,7 +150,8 @@ public function stat()
     public function show(string $id)
     {
         $user = User::with('agences')->findOrFail($id);
-        return view('user.edit_user', compact('user'));
+        $agences = AgenceTransfert::all();
+        return view('user.edit_user', compact('user', 'agences'));
     }
 
     /**
@@ -157,7 +159,9 @@ public function stat()
      */
     public function edit(string $id)
     {
-        //
+        $user = User::with('agences')->findOrFail($id);
+        $agences = AgenceTransfert::all();
+        return view('user.edit_user', compact('user', 'agences'));
     }
 
     /**
@@ -165,7 +169,25 @@ public function stat()
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'agences_transfert_id' => 'required|exists:agences_transfert,id',
+            // autres champs …
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'prenom' => $request->prenom,
+            'sexe' => $request->sexe,
+            'telephone' => $request->telephone,
+            'email' => $request->email,
+            'adresse' => $request->adresse,
+            'profession' => $request->profession,
+            'agences_transfert_id' => $request->agences_transfert_id,
+        ]);
+
+        return redirect()->back()->with('success', 'Utilisateur mis à jour avec succès.');
     }
 
     /**

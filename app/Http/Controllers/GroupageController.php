@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Groupage;
 use App\Models\Colis;
 use App\Models\AgenceTransfert;
+use App\Models\User;
+
 
 use Illuminate\Http\Request;
 
@@ -111,7 +113,7 @@ class GroupageController extends Controller
     public function updateStatut($id)
     {
         $groupage = Groupage::findOrFail($id);
-dd($groupage);
+
         // Déterminer le nouveau statut
         if ($groupage->statut === 'en_attente') {
             $nouveauStatut = 'en_cours';

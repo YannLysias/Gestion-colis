@@ -7,6 +7,7 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<link rel="stylesheet" href="/../assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 	<link rel="stylesheet" href="/../assets/css/ready.css">
 	<link rel="stylesheet" href="/../assets/css/demo.css">
 </head>
@@ -52,7 +53,7 @@
 
 										</div>
 										<div class="table-responsive">
-											<table class="table table-bordered">
+											<table class="table table-bordered" id="colisTable" width="100%" cellspacing="0">
 												<thead>
 													<tr>
 														<th>#</th>
@@ -69,7 +70,7 @@
                                                     @foreach ($users as $index => $user)
                                                         @if (Auth::user()->role !== 'Secretaire' || $user->role === 'Client')
                                                         <tr>
-                                                            <th scope="row">{{ $users->firstItem() + $index }}</th>
+                                                            <th scope="row">{{ $index + 1}}</th>
                                                             <td>{{ $user->name }}</td>
                                                             <td>{{ $user->prenom }}</td>
                                                             <td>{{ $user->sexe }}</td>
@@ -97,9 +98,9 @@
                                                     @endforeach
                                                 </tbody>
 											</table>
-                                            <div class="d-flex justify-content-center mt-3">
+                                            {{-- <div class="d-flex justify-content-center mt-3">
                                                 {{ $users->links('pagination::bootstrap-4') }}
-                                            </div>
+                                            </div> --}}
 										</div>
 									</div>
 								</div>
@@ -128,7 +129,9 @@
 	</div>
 </div>
 </body>
-<script src="/../assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script src="/../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script src="/../assets/js/core/popper.min.js"></script>
 <script src="/../assets/js/core/bootstrap.min.js"></script>
@@ -169,4 +172,26 @@
 		});
 	});
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('#colisTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "lengthChange": false,
+            "language": {
+                "search": "Rechercher:",
+                "paginate": {
+                    "previous": "Précédent",
+                    "next": "Suivant"
+                },
+                "info": "Affichage de _START_ à _END_ sur _TOTAL_ colis",
+                "zeroRecords": "Aucun colis trouvé"
+            }
+        });
+    });
+</script>
+
 </html>

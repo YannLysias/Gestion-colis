@@ -7,6 +7,7 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<link rel="stylesheet" href="/../assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 	<link rel="stylesheet" href="/../assets/css/ready.css">
 	<link rel="stylesheet" href="/../assets/css/demo.css">
 </head>
@@ -49,31 +50,51 @@
 									</div>
 									<div class="card-body">
 										<div class="table-responsive">
-											<table class="table table-bordered">
+											<table class="table table-bordered" id="colisTable" width="100%" cellspacing="0">
 												<thead>
 													<tr>
 														<th>#</th>
 														<th>Numéro</th>
-														<th>Nom Destinataire</th>
+														<th>Destinataire</th>
 														<th>Tél Destinataire</th>
 														<th>poid</th>
 														<th>Montant</th>
 														<th>Paiement</th>
 														<th>Statut</th>
+                                                        <th>Groupage</th>
 														<th>Action</th>
 													</tr>
 												</thead>
 												<tbody>
                                                 @foreach ($colis as $index => $coli)
 													<tr>
-														<th scope="row">{{ $colis->firstItem() + $index }}</th>
+														<th scope="row">{{ $index + 1 }}</th>
 														<td>{{ $coli->code_colis}}</td>
 														<td>{{ $coli->destinateur_nom}}</td>
 														<td>{{ $coli->destinateur_telephone}}</td>
 														<td>{{ $coli->poid}}</td>
 														<td>{{ $coli->montant}} $</td>
 														<td>{{ $coli->paiement}}</td>
-														<td>{{ $coli->statut}}</td>
+														<td>
+                                                            @if($coli->statut === 'en_attente')
+                                                                <span class="badge bg-warning text-dark">En attente</span>
+                                                            @elseif($coli->statut === 'en_cours')
+                                                                <span class="badge bg-info text-white">En cours</span>
+                                                            @elseif($coli->statut === 'arrivé')
+                                                                <span class="badge bg-secondary text-white">Arrivé</span>
+                                                            @elseif($coli->statut === 'livré')
+                                                                <span class="badge bg-success text-white">Livré</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @php
+                                                                $groupageTrouve = $groupages->first(function ($groupage) use ($coli) {
+                                                                    return in_array($coli->code_colis, $groupage->colis_ids ?? []);
+                                                                });
+                                                            @endphp
+
+                                                            {{ $groupageTrouve ? $groupageTrouve->code_groupage : 'Non groupé' }}
+                                                        </td>
                                                         <td>
                                                             <a href="{{ route('colis.list_colis.show', $coli->id) }}" class="btn btn-sm btn-info" title="Voir les détails">
                                                                 <i class="la la-eye"></i><br>
@@ -91,9 +112,9 @@
 
 												</tbody>
 											</table>
-                                            <div class="d-flex justify-content-center mt-3">
+                                            {{-- <div class="d-flex justify-content-center mt-3">
                                                 {{ $colis->links('pagination::bootstrap-4') }}
-                                            </div>
+                                            </div> --}}
 										</div>
 									</div>
 								</div>
@@ -122,7 +143,10 @@
 	</div>
 </div>
 </body>
-<script src="/../assets/js/core/jquery.3.2.1.min.js"></script>
+{{-- <script src="/../assets/js/core/jquery.3.2.1.min.js"></script> --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script src="/../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script src="/../assets/js/core/popper.min.js"></script>
 <script src="/../assets/js/core/bootstrap.min.js"></script>
@@ -163,6 +187,28 @@
 		});
 	});
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('#colisTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "lengthChange": false,
+            "language": {
+                "search": "Rechercher:",
+                "paginate": {
+                    "previous": "Précédent",
+                    "next": "Suivant"
+                },
+                "info": "Affichage de _START_ à _END_ sur _TOTAL_ colis",
+                "zeroRecords": "Aucun colis trouvé"
+            }
+        });
+    });
+</script>
+
 <script>
     document.getElementById('btnSearchColis').addEventListener('click', function () {
     let code = document.getElementById('searchCodeColis').value;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AgenceTransfert;
 use App\Models\Colis;
 use App\Models\User;
+use App\Models\Groupage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,10 +19,13 @@ class ColisController extends Controller
      */
     public function index()
     {
-        $colis = Colis::orderBy('created_at', 'desc')->paginate(10);
+        $colis = Colis::orderBy('created_at', 'desc')->get();
+
+        $groupages = Groupage::all();
 
         return view('colis.list_colis', [
             "colis" => $colis,
+            "groupages" => $groupages,
         ]);
     }
     /**
@@ -53,6 +57,7 @@ class ColisController extends Controller
         // if($inspections->fails()){
         //     dd($inspections->errors());
         // }
+        
         $request->validate([
             'client_id' => 'required|exists:users,id',
             'agence_transfert_id' => 'required|exists:agences_transfert,id',

@@ -58,7 +58,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Statut :</strong> {{ ucfirst(str_replace('_', ' ', $user->statut)) }}</li>
+                                <li class="list-group-item"><strong>Rôle :</strong> {{ ucfirst(str_replace('_', ' ', $user->role)) }}</li>
 
                             </div>
                             <div class="col-md-6">
@@ -70,9 +70,12 @@
                             <div class="col-md-6">
                                 <li class="list-group-item"><strong>Adresse :</strong> {{ $user->adresse }}</li>
                             </div>
+                            @foreach ($user->agences as $agence)
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Agence :</strong> {{ $user->AgenceTransfert->nom ?? 'N/A' }}</li>
+                                <li class="list-group-item"><strong>Agence :</strong> {{ $agence->nom }} ({{ $agence->pays }})</li>
                             </div>
+                            @endforeach
+                           
                         </div>
                     </div>
                     <!-- Bouton pour ouvrir le modal -->
@@ -87,7 +90,7 @@
                         <!-- Modal de modification -->
                         <div class="modal fade" id="edituserModal" tabindex="-1" aria-labelledby="edituserModalLabel" aria-hidden="true">
                        <div class="modal-dialog modal-lg">
-                            <form method="POST" action="{{ route('user.user.update', $user->id) }}">
+                            <form method="POST" action="{{ route('user.user.update', $user->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="modal-content">
@@ -131,12 +134,13 @@
                                             <!-- Statut -->
                                             <div class="col-md-6">
                                                 <label class="form-label">Agence</label>
-                                                <select name="agence_transfert_id" class="form-control" required>
-                                                    <option value="" disabled selected>-- Choisir une agence --</option>
-                                                    @foreach ($user->agences as $agence)
-                                                    <option value="{{ $agence->id }}" @selected($user->agence_transfert_id == $agence->id)>
-                                                        {{ $agence->nom }} ({{ $agence->pays }})
-                                                    </option>
+                                                <select name="agences_transfert_id" class="form-control" required>
+                                                    <option value="" disabled>-- Choisir une agence --</option>
+                                                    @foreach($agences as $agence)
+                                                        <option value="{{ $agence->id }}"
+                                                            {{ old('agences_transfert_id', $user->agences_transfert_id) == $agence->id ? 'selected' : '' }}>
+                                                            {{ $agence->nom }} ({{ $agence->pays }})
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -144,7 +148,7 @@
                                             <!-- Destinateur -->
                                             <div class="col-md-6">
                                                 <label class="form-label">Profession</label>
-                                                <input type="text" class="form-control" name="profession" value="{{ old('profession', $user->profession) }}" required>
+                                                <input type="text" class="form-control" name="profession" value="{{ old('profession', $user->profession) }}">
                                                 @error('profession')
                                                     <div class="d-block text-danger">{{$message}}</div>
                                                 @enderror
@@ -152,7 +156,7 @@
 
                                             <div class="col-md-6">
                                                 <label class="form-label">Adresse</label>
-                                                <input type="text" class="form-control" name="adresse" value="{{ old('adresse', $user->adresse) }}" required>
+                                                <input type="text" class="form-control" name="adresse" value="{{ old('adresse', $user->adresse) }}">
                                                 @error('adresse')
                                                     <div class="d-block text-danger">{{$message}}</div>
                                                 @enderror
@@ -168,7 +172,7 @@
 
                                             <div class="col-md-6">
                                                 <label class="form-label">Téléphone</label>
-                                                <input type="text" class="form-control" name="telephone" value="{{ old('telephone', $user->telephone) }}" required>
+                                                <input type="text" class="form-control" name="telephone" value="{{ old('telephone', $user->telephone) }}">
                                                 @error('telephone')
                                                     <div class="d-block text-danger">{{$message}}</div>
                                                 @enderror

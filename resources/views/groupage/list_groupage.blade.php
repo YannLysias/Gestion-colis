@@ -78,7 +78,7 @@
                                                         </td>
                                                         <td>{{ $groupage->poids_total }}</td>
                                                         <td>{{ $groupage->agence->nom }}</td>
-                                                        <td>
+                                                        <td class="action-column">
                                                             <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                                 <i class="la la-ellipsis-v"></i>
                                                             </button>
@@ -89,7 +89,7 @@
                                                                     </a>
                                                                 </li>
                                                                 <li>
-                                                                    <button class="dropdown-item ouvrir-edit-modal" data-id="{{ $groupage->id }}" data-bs-toggle="modal" data-bs-target="#editGroupageModal" type="button"><i class="la la-edit" onclick="event.stopPropagation();"></i> Modifier</button>
+                                                                    <button class="dropdown-item ouvrir-edit-modal" data-id="{{ $groupage->id }}" data-code="{{ $groupage->code_groupage }}" data-bs-toggle="modal" data-bs-target="#editGroupageModal" type="button"><i class="la la-edit"></i> Modifier</button>
                                                                 </li>
                                                             </ul>
                                                         </td>
@@ -112,14 +112,16 @@
                                                                         <th>Paiement</th>
                                                                         <th>Statut</th>
                                                                         <th>
-                                                                            <button class="btn btn-sm btn-info ouvrir-modal"
-                                                                                    data-id="{{ $groupage->id }}"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#ajouterColisModal">
-                                                                                <i class="la la-plus"></i>
-                                                                            </button>
+                                                                            @if($groupage->statut !== 'arrivé')
+                                                                                <button class="btn btn-sm btn-info ouvrir-modal"
+                                                                                        data-id="{{ $groupage->id }}"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#ajouterColisModal"
+                                                                                        onclick="event.stopPropagation();">
+                                                                                    <i class="la la-plus"></i>
+                                                                                </button>
+                                                                            @endif
                                                                         </th>
-
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -133,18 +135,20 @@
                                                                              <td>{{ $coli->paiement }}</td>
                                                                              <td>{{ $coli->statut }}</td>
                                                                              <td>
-                                                                                <form action="{{ route('groupage.supprimerColisGrouper', [$groupage->id, $coli->code_colis]) }}"
-                                                                                    method="POST"
-                                                                                    style="display:inline-block"
-                                                                                    onsubmit="return confirm('Êtes-vous sûr ?')">
+                                                                                @if($groupage->statut !== 'arrivé')
+                                                                                    <form action="{{ route('groupage.supprimerColisGrouper', [$groupage->id, $coli->code_colis]) }}"
+                                                                                        method="POST"
+                                                                                        style="display:inline-block"
+                                                                                        onsubmit="return confirm('Êtes-vous sûr ?')">
 
-                                                                                    @csrf
-                                                                                    @method('DELETE')
+                                                                                        @csrf
+                                                                                        @method('DELETE')
 
-                                                                                    <button class="btn btn-sm btn-danger">
-                                                                                        <i class="la la-trash"></i>
-                                                                                    </button>
-                                                                                </form>
+                                                                                        <button class="btn btn-sm btn-danger">
+                                                                                            <i class="la la-trash"></i>
+                                                                                        </button>
+                                                                                    </form>
+                                                                                @endif
                                                                             </td>
                                                                         </tr>
                                                                     @endforeach
@@ -172,11 +176,11 @@
 <div class="modal fade" id="editGroupageModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="form-edit-groupage" action="{{ route('groupage.updateStatut', $groupage->id) }}" method="POST">
+            <form id="form-edit-groupage" action="" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="modal-header">
-                    <h5 class="modal-title">Modifier le groupage N°{{ $groupage->code_groupage }}</h5>
+                    <h5 class="modal-title">Modifier le groupage N°<span id="modalGroupageCode"></span></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
@@ -242,13 +246,10 @@
 </script>
 
 </body>
-<script src="/../assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="/../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-<script src="/../assets/js/core/popper.min.js"></script>
-<script src="/../assets/js/core/bootstrap.min.js"></script>
 <script src="/../assets/js/plugin/chartist/chartist.min.js"></script>
 <script src="/../assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
 <script src="/../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
@@ -276,16 +277,31 @@
         editModal.addEventListener('show.bs.modal', function (event) {
 
             var button = event.relatedTarget;
-            var groupageId = button.getAttribute('data-id');
+
+            if (!button) return;
+
+            var groupageId = button.dataset.id;
+            var groupageCode = button.dataset.code;
 
             console.log("ID sélectionné:", groupageId);
 
+            // Modifier action du formulaire
             var form = editModal.querySelector('form');
+            form.action = "/groupage/" + groupageId + "/update-statut";
 
-            form.action = "/groupage/" + groupageId;
+            // Modifier le titre
+            document.getElementById("modalGroupageCode").textContent = groupageCode;
 
         });
 
+    });
+</script>
+
+<script>
+    document.querySelectorAll('td.action-column').forEach(function(td) {
+        td.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
     });
 </script>
 

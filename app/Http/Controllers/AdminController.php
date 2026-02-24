@@ -89,7 +89,9 @@ public function store(Request $request)
      */
     public function edit(string $id)
     {
-        //
+        $user = User::with('agences')->findOrFail($id);
+        $agences = AgenceTransfert::all();
+        return view('user.edit_user', compact('user', 'agences'));
     }
 
     /**
@@ -97,7 +99,39 @@ public function store(Request $request)
      */
     public function update(Request $request, string $id)
     {
-        //
+        dd($request->all(), $id);
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'sexe' => 'required|string',
+            'telephone' => 'required|string',
+            'email' => 'nullable|email|unique:users,email,' . $user->id,
+            'role' => 'required|string',
+            'adresse' => 'nullable|string',
+            'profession' => 'nullable|string',
+            'agences_transfert_id' => 'required|exists:agences_transfert,id',
+        ]);
+
+        $agence = AgenceTransfert::findOrFail(intval($request->agences_transfert_id));
+
+        $user->update([
+            'name' => $request->name,
+            'prenom' => $request->prenom,
+            'sexe' => $request->sexe,
+            'telephone' => $request->telephone,
+            'email' => $request->email,
+            'role' => $request->role,
+            'adresse' => $request->adresse,
+            'profession' => $request->profession,
+            'agences_transfert_id' => $agence->id,
+        ]);
+
+        // Synchroniser les agences associées
+        $user->agences()->sync([$agence->id]);
+
+        return redirect('user/user')->with('success', 'Utilisateur mis à jour avec succès.');
     }
 
     /**
