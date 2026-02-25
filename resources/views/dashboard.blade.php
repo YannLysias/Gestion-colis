@@ -29,8 +29,8 @@
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Total de colis</p>
-													<h4 class="card-title">{{ $colisEnregistres }}</h4>
+													<p class="card-category">Total : {{ $colisEnregistres }} colis</p>
+													<h4 class="card-category">{{ $montantEnregistres }} $</h4>
 												</div>
 											</div>
 										</div>
@@ -48,8 +48,8 @@
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">colis en cours</p>
-													<h4 class="card-title">{{ $colisEnCours }}</h4>
+													<p class="card-category">Arrivé : {{ $colisArrive }} colis</p>
+													<h4 class="card-category">{{ $montantArrive }} $</h4>
 												</div>
 											</div>
 										</div>
@@ -67,8 +67,8 @@
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Colis livré</p>
-													<h4 class="card-title">{{ $colisLivres }}</h4>
+													<p class="card-category">Livré : {{ $colisLivres }} colis</p>
+													<p class="card-category">{{ $montantLivres }} $</p>
 												</div>
 											</div>
 										</div>
@@ -86,8 +86,8 @@
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">colis en attente</p>
-													<h4 class="card-title">{{ $colisEnAttente }}</h4>
+													<p class="card-category">En attente : {{ $colisEnAttente }} colis</p>
+                                                    <p class="card-category">{{ $montantEnAttente }} $</p>
 												</div>
 											</div>
 										</div>
@@ -95,22 +95,19 @@
 								</div>
 							</div>
 
-
-
-
-<!-- 							<div class="col-md-3">
+    						<div class="col-md-3">
 								<div class="card card-stats">
 									<div class="card-body ">
 										<div class="row">
 											<div class="col-5">
 												<div class="icon-big text-center icon-warning">
-													<i class="la la-pie-chart text-warning"></i>
+													<i class="la la-truck text-warning"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Number</p>
-													<h4 class="card-title">150GB</h4>
+													<p class="card-category">Groupages</p>
+                                                    <h4 class="card-title">{{$groupage}}</h4>
 												</div>
 											</div>
 										</div>
@@ -123,13 +120,13 @@
 										<div class="row">
 											<div class="col-5">
 												<div class="icon-big text-center">
-													<i class="la la-bar-chart text-success"></i>
+													<i class="la la-user text-success"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Revenue</p>
-													<h4 class="card-title">$ 1,345</h4>
+													<p class="card-category">Clients</p>
+                                                    <h4 class="card-title">{{ $clients }}</h4>
 												</div>
 											</div>
 										</div>
@@ -142,13 +139,13 @@
 										<div class="row">
 											<div class="col-5">
 												<div class="icon-big text-center">
-													<i class="la la-times-circle-o text-danger"></i>
+													<i class="la la-users text-primary"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Errors</p>
-													<h4 class="card-title">23</h4>
+													<p class="card-category">Secrétaires</p>
+                                                    <h4 class="card-title">{{ $secretaire }}</h4>
 												</div>
 											</div>
 										</div>
@@ -161,47 +158,46 @@
 										<div class="row">
 											<div class="col-5">
 												<div class="icon-big text-center">
-													<i class="la la-heart-o text-primary"></i>
+													<i class="la la-newspaper-o text-danger"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Followers</p>
-													<h4 class="card-title">+45K</h4>
+													<p class="card-category">Agences</p>
+                                                    <h4 class="card-title">{{ $agences }}</h4>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div> -->
+							</div> 
 						</div>
-						<!-- <div class="row">
+						<div class="row">
 							<div class="col-md-3">
 								<div class="card">
 									<div class="card-header">
-										<h4 class="card-title">Task</h4>
-										<p class="card-category">Complete</p>
+										<h4 class="card-title">Taux de Livraison</h4>
+                                        <p class="card-category">Performance globale</p>
 									</div>
 									<div class="card-body">
 										<div id="task-complete" class="chart-circle mt-4 mb-3"></div>
 									</div>
 									<div class="card-footer">
-										<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
+										<i class="la la-circle text-success"></i> {{ $tauxLivraison }}% Livrés
 									</div>
 								</div>
 							</div>
 							<div class="col-md-9">
 								<div class="card">
 									<div class="card-header">
-										<h4 class="card-title">World Map</h4>
-										<p class="card-category">
-										Map of the distribution of users around the world</p>
+										<h4 class="card-title">Evolution des Colis</h4>
+                                        <p class="card-category">Statistiques mensuelles</p>
 									</div>
 									<div class="card-body">
 										<div class="mapcontainer">
-											<div class="map">
-												<span>Alternative content for the map</span>
-											</div>
+											<div style="height:300px;">
+                                                <canvas id="evolutionColis"></canvas>
+                                            </div>
 										</div>
 									</div>
 								</div>
@@ -211,14 +207,14 @@
 							<div class="col-md-4">
 								<div class="card">
 									<div class="card-body">
-										<p class="fw-bold mt-1">My Balance</p>
-										<h4><b>$ 3,018</b></h4>
-										<a href="#" class="btn btn-primary btn-full text-left mt-3 mb-3"><i class="la la-plus"></i> Add Balance</a>
+										<p class="fw-bold mt-1">Chiffre d'Affaire Total</p>
+										<h4><b>{{ number_format($caTotal, 0, ',', ' ') }} $</b></h4>
+										<a href="{{ route('colis.list_colis.index') }}" class="btn btn-primary btn-full text-left mt-3 mb-3"><i class="la la-plus"></i> Voir les colis</a>
 									</div>
 									<div class="card-footer">
 										<ul class="nav">
-											<li class="nav-item"><a class="btn btn-default btn-link" href="#"><i class="la la-history"></i> History</a></li>
-											<li class="nav-item ml-auto"><a class="btn btn-default btn-link" href="#"><i class="la la-refresh"></i> Refresh</a></li>
+											<li class="nav-item"><a class="btn btn-default btn-link" href="#"><i class="la la-history"></i> Historique</a></li>
+											<li class="nav-item ml-auto"><a class="btn btn-default btn-link" href="#"><i class="la la-refresh"></i>Actualiser</a></li>
 										</ul>
 									</div>
 								</div>
@@ -228,38 +224,40 @@
 									<div class="card-body">
 										<div class="progress-card">
 											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Profit</span>
-												<span class="text-muted fw-bold"> $3K</span>
+												<span class="text-muted">Taux Livraison</span>
+                                                <span class="text-muted fw-bold"> {{ $tauxLivraison }}%</span>
 											</div>
 											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-success" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="78%"></div>
+                                                <div class="progress-bar bg-success"
+                                                    style="width: {{ $tauxLivraison }}%">
+                                                </div>
+                                            </div>
+										</div>
+										<div class="progress-card">
+											<div class="d-flex justify-content-between mb-1">
+												<span class="text-muted">Colis arrivés</span>
+                                                <span class="text-muted fw-bold"> {{ $tauxArrivé }}%</span>
+											</div>
+											<div class="progress mb-2" style="height: 7px;">
+												<div class="progress-bar bg-info" role="progressbar" style="width: {{ $tauxArrivé }}%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="{{ $tauxArrivé }}%"></div>
 											</div>
 										</div>
 										<div class="progress-card">
 											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Orders</span>
-												<span class="text-muted fw-bold"> 576</span>
+												<span class="text-muted">En attente</span>
+                                                <span class="text-muted fw-bold"> {{ $tauxAttente }}%</span>
 											</div>
 											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="65%"></div>
+												<div class="progress-bar bg-primary" role="progressbar" style="width: {{ $tauxAttente }}%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="{{ $tauxAttente }}%"></div>
 											</div>
 										</div>
 										<div class="progress-card">
 											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Tasks Complete</span>
-												<span class="text-muted fw-bold"> 70%</span>
+												<span class="text-muted">En cours</span>
+                                                <span class="text-muted fw-bold"> {{ $tauxCours }}%</span>
 											</div>
 											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-primary" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="70%"></div>
-											</div>
-										</div>
-										<div class="progress-card">
-											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Open Rate</span>
-												<span class="text-muted fw-bold"> 60%</span>
-											</div>
-											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="60%"></div>
+												<div class="progress-bar bg-warning" role="progressbar" style="width: {{ $tauxCours }}%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="{{ $tauxCours }}%"></div>
 											</div>
 										</div>
 									</div>
@@ -268,34 +266,36 @@
 							<div class="col-md-3">
 								<div class="card card-stats">
 									<div class="card-body">
-										<p class="fw-bold mt-1">Statistic</p>
+										<p class="fw-bold mt-1">Statistiques du Jour</p>
 										<div class="row">
-											<div class="col-5">
-												<div class="icon-big text-center icon-warning">
-													<i class="la la-pie-chart text-warning"></i>
-												</div>
-											</div>
-											<div class="col-7 d-flex align-items-center">
-												<div class="numbers">
-													<p class="card-category">Number</p>
-													<h4 class="card-title">150GB</h4>
-												</div>
-											</div>
-										</div>
+                                            <div class="col-5">
+                                                <div class="icon-big text-center icon-warning">
+                                                    <i class="la la-box text-warning"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-7 d-flex align-items-center">
+                                                <div class="numbers">
+                                                    <p class="card-category">Colis</p>
+                                                    <h4 class="card-title">{{ $colisAujourdHui }}</h4>
+                                                </div>
+                                            </div>
+                                        </div>
 										<hr/>
 										<div class="row">
-											<div class="col-5">
-												<div class="icon-big text-center">
-													<i class="la la-heart-o text-primary"></i>
-												</div>
-											</div>
-											<div class="col-7 d-flex align-items-center">
-												<div class="numbers">
-													<p class="card-category">Followers</p>
-													<h4 class="card-title">+45K</h4>
-												</div>
-											</div>
-										</div>
+                                            <div class="col-5">
+                                                <div class="icon-big text-center">
+                                                    <i class="la la-money text-success"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-7 d-flex align-items-center">
+                                                <div class="numbers">
+                                                    <p class="card-category">CA du jour</p>
+                                                    <h4 class="card-title">
+                                                        {{ number_format($caAujourdHui,0,',',' ') }} $
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </div>
 									</div>
 								</div>
 							</div>
@@ -304,67 +304,58 @@
 							<div class="col-md-4">
 								<div class="card">
 									<div class="card-header">
-										<h4 class="card-title">Users Statistics</h4>
-										<p class="card-category">
-										Users statistics this month</p>
+										<h4 class="card-title">Répartition des Colis</h4>
+                                        <p class="card-category">Selon le statut actuel</p>
 									</div>
 									<div class="card-body">
-										<div id="monthlyChart" class="chart chart-pie"></div>
+										<canvas id="statutChart"></canvas>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-8">
 								<div class="card">
 									<div class="card-header">
-										<h4 class="card-title">2018 Sales</h4>
-										<p class="card-category">
-										Number of products sold</p>
+										<h4 class="card-title">Chiffre d’Affaire Annuel</h4>
+                                        <p class="card-category">Evolution mensuelle</p>
 									</div>
 									<div class="card-body">
-										<div id="salesChart" class="chart"></div>
+										<canvas id="caChart"></canvas>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="card">
 									<div class="card-header ">
-										<h4 class="card-title">Table</h4>
-										<p class="card-category">Users Table</p>
+										<h4 class="card-title">Top 5 Meilleurs Clients</h4>
+                                        <p class="card-category">Classement par nombre de colis envoyés</p>
 									</div>
 									<div class="card-body">
 										<table class="table table-head-bg-success table-striped table-hover">
-											<thead>
-												<tr>
-													<th scope="col">#</th>
-													<th scope="col">First</th>
-													<th scope="col">Last</th>
-													<th scope="col">Handle</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td>Mark</td>
-													<td>Otto</td>
-													<td>@mdo</td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>Jacob</td>
-													<td>Thornton</td>
-													<td>@fat</td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td colspan="2">Larry the Bird</td>
-													<td>@twitter</td>
-												</tr>
-											</tbody>
-										</table>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Client</th>
+                                                <th>Colis</th>
+                                                <th>Kilos (Kg)</th>
+                                                <th>Montant ($)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($topClients as $index => $client)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $client->client->name ?? 'N/A' }} {{ $client->client->prenom ?? 'N/A' }}</td>
+                                                <td><b>{{ $client->total_colis }}</b></td>
+                                                <td>{{ number_format($client->total_kilos, 2, ',', ' ') }}</td>
+                                                <td>{{ number_format($client->total_montant, 0, ',', ' ') }} $</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
+							{{-- <div class="col-md-6">
 								<div class="card card-tasks">
 									<div class="card-header ">
 										<h4 class="card-title">Tasks</h4>
@@ -483,48 +474,49 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> --}}
 						</div>
-					</div> -->
+					</div>
 				</div>
-				<!-- <footer class="footer">
+			     <footer class="footer">
 					<div class="container-fluid">
 						<nav class="pull-left">
 							<ul class="nav">
 								<li class="nav-item">
-									<a class="nav-link" href="http://www.themekita.com">
-										ThemeKita
+									<a class="nav-link" href="#">
+										Accueil
 									</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#">
-										Help
+										Aide
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="https://themewagon.com/license/#free-item">
+									<a class="nav-link" href="#">
 										Licenses
 									</a>
 								</li>
 							</ul>
 						</nav>
 						<div class="copyright ml-auto">
-							2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
+							 2026, made with <i class="la la-heart heart text-danger"></i> St <a href="http://www.themekita.com">Lysam SERVICES</a>
 						</div>
 					</div>
-				</footer> -->
+				</footer>
 			</div>
 		</div>
-	</div>
-	<!-- Modal -->
+	</div> -->
+
 </body>
 <script src="assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="assets/js/core/popper.min.js"></script>
 <script src="assets/js/core/bootstrap.min.js"></script>
 <script src="assets/js/plugin/chartist/chartist.min.js"></script>
 <script src="assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
-<!-- <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script> -->
+<script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 <script src="assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
 <script src="assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
@@ -532,4 +524,99 @@
 <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="assets/js/ready.min.js"></script>
 <script src="assets/js/demo.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const ctx2 = document.getElementById('caChart');
+
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: [
+                    "Jan", "Fév", "Mar", "Avr", "Mai", "Jun",
+                    "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"
+                ],
+                datasets: [{
+                    label: 'CA ($)',
+                    data: @json($statCA),
+                    backgroundColor: '#1572E8'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+    });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const ctx = document.getElementById('statutChart');
+
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Livrés', 'En cours', 'En attente' , 'Arrivés'],
+            datasets: [{
+                data: [
+                    {{ $colisLivres }},
+                    {{ $colisEnCours }},
+                    {{ $colisEnAttente }},
+                    {{ $colisArrive }}
+                ],
+                backgroundColor: [
+                    '#28a745',
+                    '#17a2b8',
+                    '#6c757d',
+                    '#ffc107'
+                ]
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+});
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const ctx = document.getElementById('evolutionColis');
+
+        if (!ctx) {
+            console.log("Canvas non trouvé !");
+            return;
+        }
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [
+                    "Jan", "Fév", "Mar", "Avr", "Mai", "Jun",
+                    "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"
+                ],
+                datasets: [{
+                    label: 'Nombre de colis',
+                    data: @json($statistiques),
+                    borderColor: '#1572E8',
+                    backgroundColor: 'rgba(21,114,232,0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+    });
+</script>
 </html>

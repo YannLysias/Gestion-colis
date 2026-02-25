@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\AgenceTransfert;
 use App\Models\Colis;
 use App\Models\User;
+use App\Models\Groupage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 
@@ -106,41 +108,45 @@ public function store(Request $request)
 public function stat()
 {
     $colisEnregistres = Colis::count();
+    $colisEnCours = Colis::where('statut', 'en_cours')->count();
+    $totalColis = Colis::count();
     $colisLivres = Colis::where('statut', 'Livré')->count();
     $colisEnAttente = Colis::where('statut', 'En_attente')->count();
-    $colisEnCours = Colis::where('statut', 'En_cours')->count();
+    $colisArrive = Colis::where('statut', 'arrivé')->count();
+
     $secretaire = User::where('role', 'Secretaire')->count();
     $clients = User::where('role', 'Client')->count();
     $agences = AgenceTransfert::count();
+    $groupage = Groupage::count();
 
-    $caJour = Colis::whereDate('created_at', Carbon::today())
-                ->where('paiement', 'payé')
-                ->sum('montant');
+    $montantEnregistres = Colis::sum('montant');
+    $montantArrive = Colis::where('statut', 'arrivé')->sum('montant');
+    $montantLivres = Colis::where('statut', 'livré')->sum('montant');
+    $montantEnAttente = Colis::where('statut', 'en_attente')->sum('montant');
 
-    $caSemaine = Colis::whereBetween('created_at', [
-                    Carbon::now()->startOfWeek(),
-                    Carbon::now()->endOfWeek()
-                ])
-                ->where('paiement', 'payé')
-                ->sum('montant');
+    $tauxLivraison = $totalColis > 0 ? round(($colisLivres/$totalColis)*100) : 0;
+    $tauxArrivé = $totalColis > 0 ? round(($colisArrive/$totalColis)*100) : 0;
+    $tauxAttente = $totalColis > 0 ? round(($colisEnAttente/$totalColis)*100) : 0;
+    $tauxCours = $totalColis > 0 ? round(($colisEnCours/$totalColis)*100) : 0;
+    $tauxLivraison = $colisEnregistres > 0 ? round(($colisLivres / $colisEnregistres) * 100, 2) : 0;
 
-     $caMois = Colis::whereMonth('created_at', Carbon::now()->month)
-                    ->whereYear('created_at', Carbon::now()->year)
-                    ->where('paiement', 'payé')
-                    ->sum('montant');
+    $colisAujourdHui = Colis::whereDate('created_at', today())->count();
+    $caAujourdHui = Colis::whereDate('created_at', today())->where('paiement','payé')->sum('montant');
+    $colisParMois = Colis::select(DB::raw('MONTH(created_at) as mois'), DB::raw('COUNT(*) as total'))->whereYear('created_at', Carbon::now()->year)->groupBy('mois')->orderBy('mois')->pluck('total', 'mois');
+    $caTotal = Colis::where('paiement', 'payé')->sum('montant');
+    $caParMois = Colis::select(DB::raw('MONTH(created_at) as mois'), DB::raw('SUM(montant) as total'))->where('paiement','payé')->whereYear('created_at', Carbon::now()->year)->groupBy('mois')->pluck('total','mois');
+    $topClients = Colis::select('client_id', DB::raw('COUNT(*) as total_colis'), DB::raw('SUM(poid) as total_kilos'), DB::raw('SUM(montant) as total_montant'))->with('client')->groupBy('client_id')->orderByDesc('total_colis')->limit(5)->get();
 
-        // 📦 Montant total de tous les colis
-    $montantTotal = Colis::sum('montant');
+    $statCA = [];
+    for ($i = 1; $i <= 12; $i++) {
+        $statCA[] = $caParMois[$i] ?? 0;
+    }
+    $statistiques = [];
+    for ($i = 1; $i <= 12; $i++) {
+        $statistiques[] = $colisParMois[$i] ?? 0;
+    }
 
-    // 🚚 Montant des colis envoyés (ex: statut = en_cours)
-    $montantEnvoyes = Colis::where('statut', 'en_cours')
-                            ->sum('montant');
-
-    // ✅ Montant des colis livrés
-    $montantLivres = Colis::where('statut', 'livre')
-                           ->sum('montant');
-
-    return view('dashboard', compact('colisEnregistres', 'colisLivres', 'colisEnAttente', 'colisEnCours', 'secretaire', 'clients', 'agences', 'caJour', 'caSemaine', 'caMois', 'montantTotal', 'montantEnvoyes', 'montantLivres'));
+    return view('dashboard', compact('colisEnregistres', 'topClients', 'colisEnCours', 'statCA', 'caParMois', 'caTotal', 'tauxCours', 'tauxArrivé', 'tauxAttente', 'colisLivres', 'colisEnAttente', 'colisArrive', 'secretaire', 'clients', 'agences', 'groupage', 'montantEnregistres',  'montantArrive', 'montantLivres', 'montantEnAttente', 'tauxLivraison' ,  'colisParMois', 'statistiques', 'colisAujourdHui', 'caAujourdHui'));
 }
 
 
