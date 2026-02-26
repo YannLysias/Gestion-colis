@@ -100,6 +100,7 @@ class ColisController extends Controller
             'client_id' =>  $request->client_id,
             'agence_transfert_id' => $request->agence_transfert_id,
             'poid' => $request->poid,
+            'prix_kilo' => $prixKilo,
             'type' => $request->type,
             'statut' => 'en_attente',
             'montant' => $montant,
