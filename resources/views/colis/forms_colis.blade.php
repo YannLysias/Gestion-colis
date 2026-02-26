@@ -100,24 +100,38 @@
 
                                                 <div class="form-group">
                                                     <label>Paiement <span style="color:red">*</span></label>
-                                                    <select name="paiement" class="form-control" required>
+                                                    <select name="paiement" id="paiementSelect" class="form-control" required>
                                                         <option value="" disabled selected>-- Choisir --</option>
                                                         <option value="payé">Payé</option>
                                                         <option value="non_payé">Non payé</option>
+                                                        <option value="partiel">Paiement partiel</option>
                                                     </select>
                                                     @error('paiement')
                                                         <div class="d-block text-danger">{{$message}}</div>
                                                     @enderror
                                                 </div>
 
+                                                <div class="form-group d-none" id="montantAvanceGroup">
+                                                    <label>Montant avancé ($) <span style="color:red">*</span></label>
+                                                    <input type="number" step="0.01" name="montant_avance" class="form-control">
+                                                </div>
+                                                
                                                 <div class="form-group">
                                                     <label>Type de colis</label>
-                                                    <input type="text" name="type" class="form-control" value="{{ old('type') }}" placeholder="ex: Document, Marchandise...">
+                                                    <select name="type" class="form-control" required>
+                                                        <option value="" disabled selected>-- Choisir --</option>
+                                                        <option value="document">Document</option>
+                                                        <option value="marchandise">Marchandise</option>
+                                                        <option value="electronique">Électronique</option>
+                                                        <option value="medical">Médical</option>
+                                                        <option value="cosmetique">Cosmétique</option>
+                                                        <option value="fragile">Fragile</option>
+                                                        <option value="autre">Autre</option>
+                                                    </select>
                                                     @error('type')
-                                                        <div class="d-block text-danger">{{$message}}</div>
+                                                        <div class="d-block text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-
                                                 <div class="form-group">
                                                     <label>Nom <span style="color:red">*</span></label>
                                                     <input type="text" name="destinateur_nom" class="form-control" value="{{ old('destinateur_nom') }}" required>
@@ -207,6 +221,20 @@
 </script>
 
 <script>
+    document.getElementById('paiementSelect').addEventListener('change', function () {
+
+        let montantGroup = document.getElementById('montantAvanceGroup');
+
+        if (this.value === 'partiel') {
+            montantGroup.classList.remove('d-none');
+        } else {
+            montantGroup.classList.add('d-none');
+        }
+
+    });
+</script>
+
+<script>
     // Prévisualisation de la photo
     function previewPhoto(event) {
         let reader = new FileReader();
@@ -236,9 +264,6 @@
         document.getElementById('montant_dollar').innerText = montant.toFixed(2) + " $";
         document.getElementById('montant').value = montant.toFixed(2);
     }
-
-
-
 </script>
 
 </html>

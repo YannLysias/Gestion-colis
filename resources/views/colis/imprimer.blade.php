@@ -65,11 +65,18 @@
     <div class="info-pair">
         <div class="label">Poids : {{ $colis->poid }} kg</div>
         <div class="label">Type : {{ $colis->type }}</div>
+
     </div>
     <div class="info-pair">
         <div class="label">Montant : {{ number_format($colis->montant, 0, ',', ' ') }} $</div>
         <div class="label">Paiement : {{ ucfirst($colis->paiement) }}</div>
     </div>
+    @if($colis->paiement === 'partiel')
+        <div class="info-pair">
+            <div class="label">Montant payé : {{ number_format($colis->montant_avance, 0, ',', ' ') }} $</div>
+            <div class="label">Reste à payer : {{ number_format($colis->montant - $colis->montant_avance, 0, ',', ' ') }} $</div>
+        </div>
+    @endif
     <div class="info-pair">
         <div class="label">Date : {{ $colis->created_at->format('d/m/Y') }}</div>
         <div class="label">Statut : {{ ucfirst(str_replace('_', ' ', $colis->statut)) }}</div>
@@ -136,7 +143,7 @@
             </p>
         </div>
     </div>
-    <p class="small text-center">Envoyez vos colis par tout en RD Congo en toute sécurité et honnêteté</p>
+    {{-- <p class="small text-center">Envoyez vos colis par tout en RD Congo en toute sécurité et honnêteté</p> --}}
 
 
     {{-- Boutons --}}

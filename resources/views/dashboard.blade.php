@@ -500,7 +500,7 @@
 							</ul>
 						</nav>
 						<div class="copyright ml-auto">
-							 2026, made with <i class="la la-heart heart text-danger"></i> St <a href="http://www.themekita.com">Lysam SERVICES</a>
+							Copyright 2026 - 2027 ,   St <a href="#">Lysam SERVICES</a>
 						</div>
 					</div>
 				</footer>
@@ -516,7 +516,6 @@
 <script src="assets/js/core/bootstrap.min.js"></script>
 <script src="assets/js/plugin/chartist/chartist.min.js"></script>
 <script src="assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
-<script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 <script src="assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
 <script src="assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>

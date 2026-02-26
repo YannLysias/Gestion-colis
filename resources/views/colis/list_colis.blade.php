@@ -8,6 +8,8 @@
 	<link rel="stylesheet" href="/../assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 	<link rel="stylesheet" href="/../assets/css/ready.css">
 	<link rel="stylesheet" href="/../assets/css/demo.css">
 </head>
@@ -26,7 +28,7 @@
             @include('layouts.sidbar')
 				<div class="content">
 					<div class="container-fluid">
-						<h4 class="page-title">Listes des Colis</h4>
+						<h4 class="page-title">Liste des Colis</h4>
 						<div class="row">
 							<div class="col-md-12">
                                 @if (session('success'))
@@ -37,7 +39,7 @@
                                 @endif
 								<div class="card">
 									<div class="card-header d-flex justify-content-between align-items-center">
-										<div class="card-title">Colis</div>
+										<div class="card-title">Liste des Colis</div>
 
                                          {{-- <div class="d-flex align-items-center">
                                             <input type="text" id="searchNumControl" class="form-control me-2" placeholder="Numéro de colis" style="width: 250px;">
@@ -149,6 +151,14 @@
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script src="/../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script src="/../assets/js/core/popper.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<!-- Excel / PDF dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 <script src="/../assets/js/core/bootstrap.min.js"></script>
 <script src="/../assets/js/plugin/chartist/chartist.min.js"></script>
 <script src="/../assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
@@ -188,26 +198,6 @@
 	});
 </script>
 
-<script>
-    $(document).ready(function() {
-        $('#colisTable').DataTable({
-            "paging": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "lengthChange": false,
-            "language": {
-                "search": "Rechercher:",
-                "paginate": {
-                    "previous": "Précédent",
-                    "next": "Suivant"
-                },
-                "info": "Affichage de _START_ à _END_ sur _TOTAL_ colis",
-                "zeroRecords": "Aucun colis trouvé"
-            }
-        });
-    });
-</script>
 
 <script>
     document.getElementById('btnSearchColis').addEventListener('click', function () {
@@ -244,5 +234,58 @@
             }
         });
 });
+</script>
+
+<script>
+    $(document).ready(function() {
+
+        if ($.fn.DataTable.isDataTable('#colisTable')) {
+            $('#colisTable').DataTable().destroy();
+        }
+
+        $('#colisTable').DataTable({
+            dom: 'Bfrtip',
+
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: '📋 Copier',
+                    className: 'btn btn-secondary'
+                },
+                {
+                    extend: 'excel',
+                    text: '📊 Excel',
+                    className: 'btn btn-secondary'
+                },
+                {
+                    extend: 'pdf',
+                    text: '📄 PDF',
+                    className: 'btn btn-secondary'
+                },
+                {
+                    extend: 'print',
+                    text: '🖨️ Imprimer',
+                    className: 'btn btn-secondary'
+                }
+            ],
+
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            lengthChange: false,
+
+            language: {
+                search: "Rechercher:",
+                paginate: {
+                    previous: "Précédent",
+                    next: "Suivant"
+                },
+                info: "Affichage de _START_ à _END_ sur _TOTAL_ colis",
+                zeroRecords: "Aucun colis trouvé"
+            }
+        });
+
+    });
 </script>
 </html>

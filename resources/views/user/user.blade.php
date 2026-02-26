@@ -7,6 +7,8 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<link rel="stylesheet" href="/../assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 	<link rel="stylesheet" href="/../assets/css/ready.css">
 	<link rel="stylesheet" href="/../assets/css/demo.css">
@@ -37,7 +39,11 @@
                                 @endif
 								<div class="card">
 									<div class="card-header d-flex justify-content-between align-items-center">
-										<div class="card-title">Listes des Utilisateurs</div>
+                                        @if (request()->routeIs('user.admin.index') )
+										<div class="card-title">Liste des Secretaires</div>
+                                        @else
+                                        <div class="card-title">Liste des Clients</div>
+                                        @endif
                                         @if (request()->routeIs('user.admin.index') )
                                         <a href="/user/user/create" class="btn btn-primary">
                                             Ajouter un Secretaire
@@ -49,9 +55,6 @@
                                         @endif
 									</div>
 									<div class="card-body">
-										<div class="card-sub">
-
-										</div>
 										<div class="table-responsive">
 											<table class="table table-bordered" id="colisTable" width="100%" cellspacing="0">
 												<thead>
@@ -143,6 +146,16 @@
 <script src="/../assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
 <script src="/../assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="/../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Buttons -->
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+
+<!-- Excel / PDF dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
 <script src="/../assets/js/ready.min.js"></script>
 <script>
 	$('#displayNotif').on('click', function(){
@@ -175,22 +188,54 @@
 
 <script>
     $(document).ready(function() {
+
+        if ($.fn.DataTable.isDataTable('#colisTable')) {
+            $('#colisTable').DataTable().destroy();
+        }
+
         $('#colisTable').DataTable({
-            "paging": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "lengthChange": false,
-            "language": {
-                "search": "Rechercher:",
-                "paginate": {
-                    "previous": "Précédent",
-                    "next": "Suivant"
+            dom: 'Bfrtip',
+
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: '📋 Copier',
+                    className: 'btn btn-secondary'
                 },
-                "info": "Affichage de _START_ à _END_ sur _TOTAL_ colis",
-                "zeroRecords": "Aucun colis trouvé"
+                {
+                    extend: 'excel',
+                    text: '📊 Excel',
+                    className: 'btn btn-secondary'
+                },
+                {
+                    extend: 'pdf',
+                    text: '📄 PDF',
+                    className: 'btn btn-secondary'
+                },
+                {
+                    extend: 'print',
+                    text: '🖨️ Imprimer',
+                    className: 'btn btn-secondary'
+                }
+            ],
+
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            lengthChange: false,
+
+            language: {
+                search: "Rechercher:",
+                paginate: {
+                    previous: "Précédent",
+                    next: "Suivant"
+                },
+                info: "Affichage de _START_ à _END_ sur _TOTAL_ colis",
+                zeroRecords: "Aucun colis trouvé"
             }
         });
+
     });
 </script>
 

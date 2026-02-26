@@ -19,7 +19,8 @@ return new class extends Migration
             $table->decimal('poid', 10, 2);
             $table->string('type')->nullable();
             $table->enum('statut', ['en_attente', 'en_cours', 'arrivé', 'livré']);
-            $table->enum('paiement', ['payé', 'non_payé']);
+            $table->enum('paiement', ['payé', 'non_payé', 'partiel']);
+            $table->decimal('montant_avance', 10, 2)->default(0);
             $table->decimal('montant', 10, 2);
             $table->string('destinateur_nom');
             $table->string('destinateur_prenom');

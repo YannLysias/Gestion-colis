@@ -67,7 +67,8 @@ class ColisController extends Controller
             'destinateur_prenom' => 'nullable|string|max:255',
             'destinateur_email' => 'nullable|string|max:255',
             'destinateur_telephone' => 'required|string|max:255',
-            'paiement' => 'required|in:payé,non_payé',
+            'paiement' => 'required|in:payé,non_payé,partiel',
+            'montant_avance' => 'nullable|numeric|min:0',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -102,6 +103,7 @@ class ColisController extends Controller
             'type' => $request->type,
             'statut' => 'en_attente',
             'montant' => $montant,
+            'montant_avance' => $request->montant_avance ?? 0,
             'paiement' => $request->paiement,
             'destinateur_nom' => $request->destinateur_nom,
             'destinateur_prenom' => $request->destinateur_prenom,
@@ -158,6 +160,11 @@ class ColisController extends Controller
                 'statut' => 'Impossible de livrer un colis non payé.'
             ])->withInput();
         }
+        if ($request->statut === 'livré' && $request->paiement === 'partiel') {
+            return back()->withErrors([
+                'statut' => 'Impossible de livrer un colis partiellement payé.'
+            ])->withInput();
+        }
 
         $colis->update([
 
@@ -168,6 +175,7 @@ class ColisController extends Controller
             'type' => $request->type,
             'statut' => $request->statut,
             'paiement' => $request->paiement,
+            'montant_avance' => $request->montant_avance ?? 0,
             'destinateur_nom' => $request->destinateur_nom,
             'destinateur_prenom' => $request->destinateur_prenom,
             'destinateur_email' => $request->destinateur_email,

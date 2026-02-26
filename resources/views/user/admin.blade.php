@@ -27,7 +27,7 @@
                                 @endif
 								<div class="card">
 									<div class="card-header d-flex justify-content-between align-items-center">
-										<div class="card-title">Listes des Secretaires</div>
+										<div class="card-title">Liste des Secretaires</div>
 										<a href="/user/user/create" class="btn btn-primary">
                                             Ajouter un Secretaire
                                         </a>

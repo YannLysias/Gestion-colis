@@ -27,15 +27,12 @@
                                 @endif
 								<div class="card">
                                     <div class="card-header d-flex justify-content-between align-items-center">
-                                        <div class="card-title">Listes des agences</div>
+                                        <div class="card-title">Liste des agences</div>
                                         <a href="/agence/create" class="btn btn-primary">
                                             Ajouter une agence
                                         </a>
                                     </div>
 									<div class="card-body">
-										<div class="card-sub">
-
-										</div>
 										<div class="table-responsive">
 											<table class="table table-bordered">
 												<thead>

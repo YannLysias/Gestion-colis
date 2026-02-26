@@ -62,7 +62,7 @@ class GroupageController extends Controller
 
         $colis = Colis::whereIn('code_colis', $request->colis_ids)->get();
         $poidsTotal = $colis->sum('poid');
-        $code = 'GRP' . rand(100,999);
+        $code = 'ARS' . rand(100,999);
 
         Groupage::create([
             'code_groupage' => $code,

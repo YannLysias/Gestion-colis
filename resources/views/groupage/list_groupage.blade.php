@@ -103,14 +103,14 @@
                                                             @endphp
                                                             <table class="table table-sm table-striped" style="color: #333;">
                                                                 <thead>
-                                                                    <tr>
-                                                                        <th>Code</th>
-                                                                        <th>Destinataire</th>
-                                                                        <th>Tél Destinataire</th>
-                                                                        <th>Poids</th>
-                                                                        <th>Montant</th>
-                                                                        <th>Paiement</th>
-                                                                        <th>Statut</th>
+                                                                    <tr style="background-color: #1D62F0;">
+                                                                        <th style="color: white;">Code</th>
+                                                                        <th style="color: white;">Destinataire</th>
+                                                                        <th style="color: white;">Tél Destinataire</th>
+                                                                        <th style="color: white;">Poids</th>
+                                                                        <th style="color: white;">Montant</th>
+                                                                        <th style="color: white;">Paiement</th>
+                                                                        <th style="color: white;">Statut</th>
                                                                         <th>
                                                                             @if($groupage->statut !== 'arrivé')
                                                                                 <button class="btn btn-sm btn-info ouvrir-modal"

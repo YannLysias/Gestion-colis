@@ -54,7 +54,15 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Paiement :</strong> {{ $colis->paiement }}</li>
+                                <li class="list-group-item">
+                                    <strong>Paiement : </strong> {{ $colis->paiement }}
+
+                                    @if($colis->paiement === 'partiel')
+                                        <br>
+                                        <strong>Montant payé :</strong> {{ number_format($colis->montant_avance, 0, ',', ' ') }} $ <br>
+                                        <strong>Reste à payer :</strong> {{ number_format($colis->montant - $colis->montant_avance, 0, ',', ' ') }} $
+                                    @endif
+                                </li>
                                 @error('statut')
                                     <div class="d-block text-danger mt-1">
                                         {{ $message }}
@@ -109,10 +117,7 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <!-- Bouton pour ouvrir le modal -->
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editColisModal">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editColisModal" @if($colis->statut === 'livré') disabled @endif>
                         Modifier
                     </button>
                     <a href="{{ route('colis.imprimer', $colis->id) }}" target="_blank" class="btn btn-success">
@@ -146,7 +151,15 @@
                                             <!-- Type -->
                                             <div class="col-md-6">
                                                 <label class="form-label">Type</label>
-                                                <input type="text" class="form-control" name="type" value="{{ old('type', $colis->type) }}">
+                                                <select class="form-control" name="type">
+                                                    <option value="document" @selected($colis->type == 'document')>Document</option>
+                                                    <option value="marchandise" @selected($colis->type == 'marchandise')>Marchandise</option>
+                                                    <option value="electronique" @selected($colis->type == 'electronique')>Électronique</option>
+                                                    <option value="medical" @selected($colis->type == 'medical')>Médical</option>
+                                                    <option value="cosmetique" @selected($colis->type == 'cosmetique')>Cosmétique</option>
+                                                    <option value="fragile" @selected($colis->type == 'fragile')>Fragile</option>
+                                                    <option value="autre" @selected($colis->type == 'autre')>Autre</option>
+                                                </select>
                                                 @error('type')
                                                     <div class="d-block text-danger">{{$message}}</div>
                                                 @enderror
@@ -155,12 +168,21 @@
                                             <!-- Paiement -->
                                             <div class="col-md-6">
                                                 <label class="form-label">Paiement</label>
-                                                <select class="form-control" name="paiement" required>
+                                                <select class="form-control" id="paiementSelect" name="paiement" required>
                                                     <option value="payé" @selected($colis->paiement == 'payé')>Payé</option>
                                                     <option value="non_payé" @selected($colis->paiement == 'non_payé')>Non Payé</option>
-
+                                                    <option value="partiel" @selected($colis->paiement == 'partiel')>Partiel</option>
                                                 </select>
                                                 @error('paiement')
+                                                    <div class="d-block text-danger">{{$message}}</div>
+                                                @enderror
+                                            </div>
+
+                                             <!-- Montant avancé (affiché uniquement si paiement partiel) -->
+                                             <div class="col-md-6 d-none" id="montantAvanceGroup">
+                                                <label class="form-label text-danger" style="color: red;">Montant avancé ($)</label>
+                                                <input type="number" step="0.01" class="form-control" name="montant_avance" value="{{ old('montant_avance', $colis->montant_avance) }}">
+                                                @error('montant_avance')
                                                     <div class="d-block text-danger">{{$message}}</div>
                                                 @enderror
                                             </div>
@@ -231,8 +253,7 @@
 
 <!-- Bootstrap JS with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="/../assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script src="/../assets/js/core/popper.min.js"></script>
 <script src="/../assets/js/core/bootstrap.min.js"></script>
@@ -245,15 +266,29 @@
 <script src="/../assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="/../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="/../assets/js/ready.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    document.getElementById('paiementSelect').addEventListener('change', function () {
+
+        let montantGroup = document.getElementById('montantAvanceGroup');
+
+        if (this.value === 'partiel') {
+            montantGroup.classList.remove('d-none');
+        } else {
+            montantGroup.classList.add('d-none');
+        }
+
+    });
+</script>
 
 <script>
     function calculerMontant() {
         let poid = parseFloat(document.getElementById("poid").value);
         let montant = 0;
         if (!isNaN(poid)) {
-            montant = poid * 3000;
+            montant = poid * 9;
         }
-        document.getElementById("montant_apercu").innerText = montant.toLocaleString('fr-FR') + " FCFA";
+        document.getElementById("montant_apercu").innerText = montant.toLocaleString('fr-FR') + " $";
     }
 </script>
 
