@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained('user_id')->onDelete('cascade');
             $table->foreignId('agence_transfert_id')->constrained('agences_transfert')->onDelete('cascade');
             $table->decimal('poid', 10, 2);
+            $table->decimal('prix_kilo', 10, 2);
             $table->string('type')->nullable();
             $table->enum('statut', ['en_attente', 'en_cours', 'arrivé', 'livré']);
             $table->enum('paiement', ['payé', 'non_payé', 'partiel']);

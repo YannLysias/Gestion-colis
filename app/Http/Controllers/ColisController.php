@@ -166,6 +166,8 @@ class ColisController extends Controller
             ])->withInput();
         }
 
+        $prixKilo = $request->prix_kilo;
+
         $colis->update([
 
             // 'user_id' => Auth::id(),
@@ -173,6 +175,7 @@ class ColisController extends Controller
             // 'agence_transfert_id' => $request->agence_transfert_id,
             'poid' => $request->poid,
             'type' => $request->type,
+            'prix_kilo' => $prixKilo,
             'statut' => $request->statut,
             'paiement' => $request->paiement,
             'montant_avance' => $request->montant_avance ?? 0,
@@ -180,7 +183,7 @@ class ColisController extends Controller
             'destinateur_prenom' => $request->destinateur_prenom,
             'destinateur_email' => $request->destinateur_email,
             'destinateur_telephone' => $request->destinateur_telephone,
-            'montant' => $request->poid * 9, // recalcul automatique
+            'montant' => $request->poid * $prixKilo,
         ]);
 
         return back()->with('success', 'Colis modifié avec succès.');

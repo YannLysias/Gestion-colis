@@ -63,7 +63,7 @@
     {{-- Section Informations générales --}}
     <div class="section-title">Informations Générales</div>
     <div class="info-pair">
-        <div class="label">Poids : {{ $colis->poid }} kg</div>
+        <div class="label">Poids : {{ $colis->poid }} kg | pour 1kg = {{ number_format($colis->prix_kilo, 0, ',', ' ') }} $</div>
         <div class="label">Type : {{ $colis->type }}</div>
 
     </div>

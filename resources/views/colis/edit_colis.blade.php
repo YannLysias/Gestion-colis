@@ -35,7 +35,7 @@
                     <div class="container">
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Poids :</strong> {{ $colis->poid }} kg</li>
+                                <li class="list-group-item"><strong>Poids :</strong> {{ $colis->poid }} kg | pour 1kg = {{ number_format($colis->prix_kilo, 0, ',', ' ') }} $</li>
                             </div>
                             <div class="col-md-6">
                                 <li class="list-group-item"><strong>Date :</strong> {{ $colis->created_at }}</li>
@@ -146,6 +146,14 @@
                                                 @error('poid')
                                                     <div class="d-block text-danger">{{$message}}</div>
                                                 @enderror
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Prix par Kg ($)</label>
+                                                <select name="prix_kilo" id="prix_kilo" class="form-control" required>
+                                                    <option value="8" {{ old('prix_kilo', $colis->prix_kilo) == 8 ? 'selected' : '' }}>8 $</option>
+                                                    <option value="9" {{ old('prix_kilo', $colis->prix_kilo) == 9 ? 'selected' : '' }}>9 $</option>
+                                                    <option value="10" {{ old('prix_kilo', $colis->prix_kilo) == 10 ? 'selected' : '' }}>10 $</option>
+                                                </select>
                                             </div>
 
                                             <!-- Type -->
