@@ -26,7 +26,7 @@
             @include('layouts.sidbar')
 				<div class="content">
 					<div class="container-fluid">
-						<h4 class="page-title">Listes des Colis</h4>
+						<h4 class="page-title">Listes des groupage</h4>
 						<div class="row">
 							<div class="col-md-12">
                                 @if (session('success'))
@@ -37,7 +37,7 @@
                                 @endif
 								<div class="card">
 									<div class="card-header d-flex justify-content-between align-items-center">
-										<div class="card-title">Colis</div>
+										<div class="card-title">Groupages</div>
 
                                          {{-- <div class="d-flex align-items-center">
                                             <input type="text" id="searchNumControl" class="form-control me-2" placeholder="Numéro de colis" style="width: 250px;">
@@ -135,7 +135,7 @@
                                                                              <td>{{ $coli->paiement }}</td>
                                                                              <td>{{ $coli->statut }}</td>
                                                                              <td>
-                                                                                @if($groupage->statut !== 'arrivé')
+                                                                                @if($groupage->statut !== 'arrivé' && $groupage->id_user == auth()->id())
                                                                                     <form action="{{ route('groupage.supprimerColisGrouper', [$groupage->id, $coli->code_colis]) }}"
                                                                                         method="POST"
                                                                                         style="display:inline-block"
@@ -185,6 +185,11 @@
                 </div>
 
                 <div class="modal-body">
+                    <div id="vol" class="mb-3">
+                        <label for="vol" class="form-label">Nom de vol</label>
+                        <input type="text" name="vol" value="{{ $groupage->vol }}" class="form-control" placeholder="Nom de vol">
+                    </div>
+
                     <div class="mb-3">
                         <label for="statut" class="form-label">Statut</label>
                         <select name="statut" id="statut" class="form-control" required>
@@ -232,8 +237,9 @@
         </div>
     </div>
 </div>
-
 {{-- modal Ajout Colis --> --}}
+
+<!-- Modal voir les detail -->
 
 <script>
     $(document).ready(function() {

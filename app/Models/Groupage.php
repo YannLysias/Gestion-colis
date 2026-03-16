@@ -10,13 +10,8 @@ class Groupage extends Model
         'colis_ids' => 'array',
     ];
 
-    protected $fillable = [
-        'code_groupage',
-        'colis_ids',
-        'statut',
-        'poids_total',
-        'agence_id',
-    ];
+    protected $guarded = [];
+    protected $table = 'groupages';
 
     // Relation avec l'agence de réception
     public function agence()

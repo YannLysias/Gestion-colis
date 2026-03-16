@@ -52,7 +52,7 @@
 												</thead>
 												<tbody>
                                                     @foreach ($users as $index => $user)
-                                                        @if (Auth::user()->role !== 'Secretaire' || $user->role === 'Client')
+                                                       
                                                         <tr>
                                                             <th scope="row">{{ $index + 1 }}</th>
                                                             <td>{{ $user->name }}</td>
@@ -71,7 +71,6 @@
                                                                 </a>
                                                             </td>
                                                         </tr>
-                                                        @endif
                                                     @endforeach
                                                 </tbody>
 											</table>

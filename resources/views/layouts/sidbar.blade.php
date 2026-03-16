@@ -71,7 +71,7 @@
 								<span class="badge badge-count"></span>
 							</a>
 						</li>
-                    @if (Auth::user()->role == "Secretaire" || Auth::user()->role === 'Super-admin')
+                    @if (Auth::user()->role === 'Super-admin')
 						{{-- <li class="nav-item {{ request()->routeIs('transfert.list_transfert.index') ? 'active' : '' }}">
 							<a href="{{ route('transfert.list_transfert.index') }}">
 								<i class="la la-exchange"></i>
@@ -118,6 +118,34 @@
 							</a>
 						</li>
                     @endif
+                    @if (Auth::user()->role === 'Secretaire')
+                     <li class="nav-item {{ request()->routeIs('colis.list_colis.index') ? 'active' : '' }}">
+                        <a href="{{ route('colis.list_colis.index') }}">
+                            <i class="la la-truck"></i>
+                            <p>Gestion des Colis</p>
+                            <span class="badge badge-count"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('user.user.index') ? 'active' : '' }}">
+                        <a href="{{ route('user.user.index') }}">
+                            <i class="la la-users"></i>
+                            <p>
+                                Clients
+                            </p>
+                            <span class="badge badge-count"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('groupage.index') ? 'active' : '' }}">
+                        <a href="{{ route('groupage.index') }}">
+                            <i class="la la-truck"></i>
+                            <p>
+                                Groupage
+                            </p>
+                            <span class="badge badge-count"></span>
+                        </a>
+                    </li>
+                    @endif
+
 
                         {{-- <li class="nav-item active">
 							<a href="#">

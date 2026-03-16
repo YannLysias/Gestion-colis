@@ -19,22 +19,51 @@ class ColisController extends Controller
      */
     public function index()
     {
-        $colis = Colis::orderBy('created_at', 'desc')->get();
+        $user = Auth::user();
+
+        if ($user->role === 'Secretaire') {
+
+            // récupérer les agences de l'utilisateur
+            $agences = $user->agences->pluck('id');
+
+            $colis = Colis::where(function ($query) use ($user, $agences) {
+
+                        $query->where('user_id', $user->id)
+                            ->orWhereIn('agence_transfert_id', $agences);
+
+                    })
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+        } else {
+
+            $colis = Colis::orderBy('created_at', 'desc')->get();
+
+        }
 
         $groupages = Groupage::all();
 
-        return view('colis.list_colis', [
-            "colis" => $colis,
-            "groupages" => $groupages,
-        ]);
+        return view('colis.list_colis', compact('colis','groupages'));
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $clients = User::where('role', 'client')->get();
-        $agences = AgenceTransfert::all();
+        $user = auth()->user();
+
+        // agences de l'utilisateur connecté
+        $userAgences = $user->agences->pluck('id');
+
+        // clients appartenant aux mêmes agences
+        $clients = User::where('role', 'client')
+            ->whereHas('agences', function ($query) use ($userAgences) {
+                $query->whereIn('agence_transfert_id', $userAgences);
+            })
+            ->get();
+
+        // agences sauf celles de l'utilisateur
+        $agences = AgenceTransfert::whereNotIn('id', $userAgences)->get();
 
         return view('colis.forms_colis', compact('clients', 'agences'));
     }

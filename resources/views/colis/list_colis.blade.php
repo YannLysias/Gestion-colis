@@ -101,9 +101,13 @@
                                                             <a href="{{ route('colis.list_colis.show', $coli->id) }}" class="btn btn-sm btn-info" title="Voir les détails">
                                                                 <i class="la la-eye"></i><br>
                                                             </a>
-                                                            <a href="{{ route('colis.list_colis.destroy', $coli->id) }}" class="btn btn-sm btn-danger" title="Supprimer" onclick="event.preventDefault(); if(confirm('Êtes-vous sûr de vouloir supprimer ce colis ?')) { document.getElementById('delete-form-{{ $coli->id }}').submit(); }">
-                                                                <i class="la la-trash"></i>
-                                                            </a>
+                                                            @if(auth()->user()->role === 'Secretaire')
+
+                                                            @else
+                                                                <a href="{{ route('colis.list_colis.destroy', $coli->id) }}" class="btn btn-sm btn-danger" title="Supprimer" onclick="event.preventDefault(); if(confirm('Êtes-vous sûr de vouloir supprimer ce colis ?')) { document.getElementById('delete-form-{{ $coli->id }}').submit(); }">
+                                                                    <i class="la la-trash"></i>
+                                                                </a>
+                                                            @endif
                                                             <form id="delete-form-{{ $coli->id }}" action="{{ route('colis.list_colis.destroy', $coli->id) }}" method="POST" style="display: none;">
                                                                 @csrf
                                                                 @method('DELETE')

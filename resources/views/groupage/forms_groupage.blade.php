@@ -27,10 +27,11 @@
                                 <div class="card-body">
                                     <form action="/groupage" method="POST" id="form-groupage" enctype="multipart/form-data">
                                         @csrf
+                                        <h5 class="text-primary">Informations générales</h5> 
                                         <div class="row">
                                             {{-- COLONNE 1 : Informations générales --}}
-                                            <div class="col-md-6">
-                                                <h5 class="text-primary">Informations générales</h5>    
+                                            <div class="col-md-6 mb-6">
+                                                   
                                                 <div class="form-group">
                                                     <label>Agence de reception<span style="color:red">*</span></label>
                                                     <select name="agence_id" class="form-control" required>
@@ -45,7 +46,18 @@
                                                         <div class="d-block text-danger">{{$message}}</div>
                                                     @enderror
                                                 </div>
+                                                <div class="col-6">   
+                                                    <div class="form-group">
+                                                        <label>Douanier<span></span></label>
+                                                        <input type="text" name="douanier" class="form-control" placeholder="Nom du douanier">
+                                                    </div>
+                                                        @error('douanier')
+                                                            <div class="d-block text-danger">{{$message}}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
                                             </div>
+                                            
                                             
                                             {{-- COLONNE 2 : Colis à grouper --}}
                                             <div class="col-md-12">

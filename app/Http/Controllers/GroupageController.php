@@ -60,12 +60,16 @@ class GroupageController extends Controller
             'colis_ids.*' => 'exists:colis,code_colis',
         ]);
 
+
         $colis = Colis::whereIn('code_colis', $request->colis_ids)->get();
         $poidsTotal = $colis->sum('poid');
         $code = 'ARS' . rand(100,999);
 
         Groupage::create([
+            'id_user' => auth()->id(),
             'code_groupage' => $code,
+            'vol' => $request->vol,
+            'douanier' => $request->douanier,
             'agence_id' => $request->agence_id,
             'colis_ids' => $request->colis_ids,
             'poids_total' => $poidsTotal,
@@ -126,6 +130,7 @@ class GroupageController extends Controller
         // Mettre à jour le groupage
         $groupage->update([
             'statut' => $nouveauStatut,
+            'vol' => $groupage->vol,
         ]);
 
         // Mettre à jour les colis avec le même statut

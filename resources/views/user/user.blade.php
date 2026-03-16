@@ -28,7 +28,11 @@
                 @include('layouts.sidbar')
 				<div class="content">
 					<div class="container-fluid">
-						<h4 class="page-title">Tables</h4>
+                        @if (request()->routeIs('user.admin.index') )
+                            <h4 class="page-title">Liste des Secretaires</h4>
+                        @else
+                            <h4 class="page-title">Liste des Clients</h4>
+                        @endif
 						<div class="row">
 							<div class="col-md-12">
                                 @if (session('success'))
@@ -40,9 +44,9 @@
 								<div class="card">
 									<div class="card-header d-flex justify-content-between align-items-center">
                                         @if (request()->routeIs('user.admin.index') )
-										<div class="card-title">Liste des Secretaires</div>
+										<div class="card-title">Secretaires</div>
                                         @else
-                                        <div class="card-title">Liste des Clients</div>
+                                        <div class="card-title">Clients</div>
                                         @endif
                                         @if (request()->routeIs('user.admin.index') )
                                         <a href="/user/user/create" class="btn btn-primary">
@@ -88,9 +92,13 @@
                                                                 <a href="{{ route('user.user.show', $user->id) }}" class="btn btn-sm btn-success" title="Voir les détails">
                                                                     <i class="la la-eye"></i>
                                                                 </a>
-                                                                <a href="{{ route('user.user.destroy', $user->id) }}" class="btn btn-sm btn-danger" title="Supprimer" onclick="event.preventDefault(); if(confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) { document.getElementById('delete-form-{{ $user->id }}').submit(); }">
-                                                                    <i class="la la-trash"></i>
-                                                                </a>
+                                                                @if(auth()->user()->role === 'Secretaire')
+
+                                                                @else
+                                                                    <a href="{{ route('user.user.destroy', $user->id) }}" class="btn btn-sm btn-danger" title="Supprimer" onclick="event.preventDefault(); if(confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) { document.getElementById('delete-form-{{ $user->id }}').submit(); }">
+                                                                        <i class="la la-trash"></i>
+                                                                    </a>
+                                                                @endif
                                                                 <form id="delete-form-{{ $user->id }}" action="{{ route('user.user.destroy', $user->id) }}" method="POST" style="display: none;">
                                                                     @csrf
                                                                     @method('DELETE')
@@ -131,6 +139,9 @@
 		</div>
 	</div>
 </div>
+
+<!-- Modal voir les detail -->
+<div>   </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

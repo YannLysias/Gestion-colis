@@ -188,6 +188,70 @@
                         </div>
                         </div>
 
+                        <div class="card-body">
+                            <h5><b>Liste des colis envoyés par ce client :</b></h5>
+										<div class="table-responsive">
+											<table class="table table-bordered" id="colisTable" width="100%" cellspacing="0">
+												<thead>
+													<tr>
+														<th>#</th>
+														<th>Numéro</th>
+														<th>Destinataire</th>
+														<th>Tél Destinataire</th>
+														<th>poid</th>
+														<th>Montant</th>
+														<th>Paiement</th>
+														<th>Statut</th>
+                                                        <th>Groupage</th>
+														<th>Action</th>
+													</tr>
+												</thead>
+												<tbody>
+                                                @foreach ($listeColis as $index => $coli)
+													<tr>
+														<th scope="row">{{ $index + 1 }}</th>
+														<td>{{ $coli->code_colis}}</td>
+														<td>{{ $coli->destinateur_nom}}</td>
+														<td>{{ $coli->destinateur_telephone}}</td>
+														<td>{{ $coli->poid}}</td>
+														<td>{{ $coli->montant}} $</td>
+														<td>{{ $coli->paiement}}</td>
+														<td>
+                                                            @if($coli->statut === 'en_attente')
+                                                                <span class="badge bg-warning text-dark">En attente</span>
+                                                            @elseif($coli->statut === 'en_cours')
+                                                                <span class="badge bg-info text-white">En cours</span>
+                                                            @elseif($coli->statut === 'arrivé')
+                                                                <span class="badge bg-secondary text-white">Arrivé</span>
+                                                            @elseif($coli->statut === 'livré')
+                                                                <span class="badge bg-success text-white">Livré</span>
+                                                            @endif
+                                                        </td>
+                                                        <td>
+                                                            @php
+                                                                $groupageTrouve = $groupages->first(function ($groupage) use ($coli) {
+                                                                    return in_array($coli->code_colis, $groupage->colis_ids ?? []);
+                                                                });
+                                                            @endphp
+
+                                                            {{ $groupageTrouve ? $groupageTrouve->code_groupage : 'Non groupé' }}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{{ route('colis.list_colis.show', $coli->id) }}" class="btn btn-sm btn-info" title="Voir les détails">
+                                                                <i class="la la-eye"></i><br>
+                                                            </a>
+                                                        </td>
+													</tr>
+                                                @endforeach
+
+												</tbody>
+											</table>
+                                            {{-- <div class="d-flex justify-content-center mt-3">
+                                                {{ $colis->links('pagination::bootstrap-4') }}
+                                            </div> --}}
+										</div>
+									</div>
+
                 </div>
 
 

@@ -157,7 +157,9 @@ public function stat()
     {
         $user = User::with('agences')->findOrFail($id);
         $agences = AgenceTransfert::all();
-        return view('user.edit_user', compact('user', 'agences'));
+        $groupages = Groupage::all();
+        $listeColis = Colis::where('client_id', $id)->get();
+        return view('user.edit_user', compact('user', 'agences', 'groupages', 'listeColis'));
     }
 
     /**
