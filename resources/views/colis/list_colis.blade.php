@@ -72,7 +72,7 @@
 													<tr>
 														<th scope="row">{{ $index + 1 }}</th>
 														<td>{{ $coli->code_colis}}</td>
-														<td>{{ $coli->destinateur_nom}}</td>
+														<td>{{ $coli->destinateur_nom}} {{ $coli->destinateur_prenom}}</td>
 														<td>{{ $coli->destinateur_telephone}}</td>
 														<td>{{ $coli->poid}}</td>
 														<td>{{ $coli->montant}} $</td>

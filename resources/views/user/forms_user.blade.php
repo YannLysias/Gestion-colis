@@ -16,7 +16,7 @@
                 @include('layouts.sidbar')
 				<div class="content">
 					<div class="container-fluid">
-						<h4 class="page-title">Forms</h4>
+						<h4 class="page-title">Formulaire d'ajout</h4>
 						<div class="row">
 							<div class="col-md-12">
                                 <div class="card">
@@ -113,9 +113,20 @@
 
                                                 {{-- MOT DE PASSE --}}
                                                 <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="profession">profession</label>
-                                                        <input type="text" name="profession" class="form-control">
+                                                     <div class="form-group">
+                                                        <label for="profession">Profession <span style="color:red">*</span></label>
+                                                        <select name="profession" class="form-control" required>
+                                                            <option value="">-- Choisir --</option>
+                                                            <option value="Commerçant">Commerçant</option>
+                                                            <option value="Entrepreneur">Entrepreneur</option>
+                                                            <option value="Etudiant">Etudiant</option>
+                                                            <option value="Ingenieur">Ingenieur</option>
+                                                            <option value="Couturier">Couturier</option>
+                                                            <option value="Medecin">Medecin</option>
+                                                            <option value="Chaufeur">Chaufeur</option>
+                                                            <option value="Fonctionnaire">Fonctionnaire</option>
+                                                            <option value="Aucune">Aucune</option>
+                                                        </select>
                                                     </div>
                                                      @error('profession')
                                                         <div class="d-block text-danger">{{$message}}</div>

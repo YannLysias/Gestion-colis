@@ -15,6 +15,11 @@
                 display: none;
             }
         }
+        @media print {
+            .signature-zone {
+                margin-top: 80px;
+            }
+        }
 
         .logo {
             width: 80px;
@@ -47,10 +52,12 @@
 
         .signature-line {
             border-top: 1px solid #000;
-            text-align: center;
+            width: 70%;
+            margin: 0 auto;
             padding-top: 5px;
-            width: 90%;
+            font-size: 12px;
         }
+        
     </style>
 </head>
 <body>
@@ -111,17 +118,39 @@
 
     {{-- Section Signature --}}
     <div class="section-title">Signatures</div>
-    <div class="row signature-zone">
+    {{-- <div class="row signature-zone">
         <div class="col-md-3">
              <p class="mb-1">Client</p>
              <div class="signature-line">Signature</div>
         </div>
         <div class="col-md-3">
              <p class="mb-1">Caissier</p>
-             {{ Auth::user()->name }}
+             {{ Auth::user()->name }} {{ Auth::user()->prenom }}
              <div class="signature-line">Signature</div>
         </div>
+    </div> --}}
+    <div class="row signature-zone">
+        <div class="col-6 text-center">
+            <p class="mb-2"><strong>Client</strong></p>
+            <div style="height: 40px;"></div> <!-- espace pour signature -->
+            <div class="signature-line">Signature</div>
+        </div>
+
+        <div class="col-6 text-center">
+            <p class="mb-2"><strong>Caissier</strong></p>
+            
+            <div style="height: 40px;"></div>
+            <div class="signature-line"><p>{{ auth()->user()->name }} {{ auth()->user()->prenom }}</p></div>
+        </div>
     </div>
+    @php
+        $agence = auth()->user()->agences->first();
+    @endphp
+
+    <p class="mt-2 text-end">
+        {{ $agence->ville ?? 'Ville inconnue' }},
+        le {{ now()->format('d/m/Y à H:i') }}
+    </p>
 
     <div class="row">
         <div class="col-md-3">
