@@ -9,7 +9,6 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 	<link rel="stylesheet" href="/../assets/css/ready.css">
 	<link rel="stylesheet" href="/../assets/css/demo.css">
 </head>
@@ -251,11 +250,6 @@
             dom: 'Bfrtip',
 
             buttons: [
-                {
-                    extend: 'copy',
-                    text: '📋 Copier',
-                    className: 'btn btn-secondary'
-                },
                 {
                     extend: 'excel',
                     text: '📊 Excel',

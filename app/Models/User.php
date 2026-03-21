@@ -47,4 +47,5 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(AgenceTransfert::class, 'agence_user', 'user_id', 'agence_transfert_id');
     }
+
 }

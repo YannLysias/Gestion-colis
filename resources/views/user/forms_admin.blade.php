@@ -21,7 +21,7 @@
 							<div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header text-white">
-                                        <h4 class="card-title mb-0">Formulaire d'ajout d'un Client</h4>
+                                        <h4 class="card-title mb-0">Formulaire d'ajout d'un Sécretaire</h4>
                                     </div>
                                     <div class="card-body">
                                         <form action="/user/user" method="POST">
@@ -92,7 +92,7 @@
                                                         <label for="role">Role <span style="color:red">*</span></label>
                                                         <select name="role" class="form-control" required>
                                                             <option value="">-- Choisir --</option>
-                                                            <option value="Client">Client</option>
+                                                            <option value="Secretaire">Secretaire</option>
                                                         </select>
                                                     </div>
                                                      @error('role')

@@ -49,7 +49,7 @@
                                         <div class="card-title">Clients</div>
                                         @endif
                                         @if (request()->routeIs('user.admin.index') )
-                                        <a href="/user/user/create" class="btn btn-primary">
+                                        <a href="/user/admin/create" class="btn btn-primary">
                                             Ajouter un Secretaire
                                         </a>
                                         @else

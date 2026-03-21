@@ -29,7 +29,7 @@ class AdminController extends Controller
     public function create()
     {
         $agences = AgenceTransfert::all();
-        return view('user.forms_user', [
+        return view('user.forms_admin', [
             'agences' => $agences,
         ]);
     }

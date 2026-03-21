@@ -8,6 +8,8 @@
 	<link rel="stylesheet" href="/../assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
 	<link rel="stylesheet" href="/../assets/css/ready.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
 	<link rel="stylesheet" href="/../assets/css/demo.css">
 </head>
 <body>
@@ -211,7 +213,7 @@
 													<tr>
 														<th scope="row">{{ $index + 1 }}</th>
 														<td>{{ $coli->code_colis}}</td>
-														<td>{{ $coli->destinateur_nom}}</td>
+														<td>{{ $coli->destinateur_nom}} {{ $coli->destinateur_prenom}}</td>
 														<td>{{ $coli->destinateur_telephone}}</td>
 														<td>{{ $coli->poid}}</td>
 														<td>{{ $coli->montant}} $</td>
@@ -264,6 +266,17 @@
 
 <!-- Bootstrap JS with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="/../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="/../assets/js/core/jquery.3.2.1.min.js"></script>
 
 <script src="/../assets/js/core/jquery.3.2.1.min.js"></script>
 <script src="/../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
@@ -288,6 +301,54 @@
         }
         document.getElementById("montant_apercu").innerText = montant.toLocaleString('fr-FR') + " FCFA";
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+
+        if ($.fn.DataTable.isDataTable('#colisTable')) {
+            $('#colisTable').DataTable().destroy();
+        }
+
+        $('#colisTable').DataTable({
+            dom: 'Bfrtip',
+
+            buttons: [
+                {
+                    extend: 'excel',
+                    text: '📊 Excel',
+                    className: 'btn btn-secondary'
+                },
+                {
+                    extend: 'pdf',
+                    text: '📄 PDF',
+                    className: 'btn btn-secondary'
+                },
+                {
+                    extend: 'print',
+                    text: '🖨️ Imprimer',
+                    className: 'btn btn-secondary'
+                }
+            ],
+
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: true,
+            lengthChange: false,
+
+            language: {
+                search: "Rechercher:",
+                paginate: {
+                    previous: "Précédent",
+                    next: "Suivant"
+                },
+                info: "Affichage de _START_ à _END_ sur _TOTAL_ colis",
+                zeroRecords: "Aucun colis trouvé"
+            }
+        });
+
+    });
 </script>
 
 </html>

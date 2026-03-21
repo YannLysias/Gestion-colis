@@ -26,7 +26,7 @@
             @include('layouts.sidbar')
 				<div class="content">
 					<div class="container-fluid">
-						<h4 class="page-title">Listes des groupage</h4>
+						<h4 class="page-title">Liste des groupages</h4>
 						<div class="row">
 							<div class="col-md-12">
                                 @if (session('success'))
@@ -83,11 +83,7 @@
                                                                 <i class="la la-ellipsis-v"></i>
                                                             </button>
                                                             <ul class="dropdown-menu">
-                                                                <li>
-                                                                    <a href="{{ route('groupage.show', $groupage->id) }}" class="dropdown-item">
-                                                                        <i class="la la-eye"></i> Voir les détails
-                                                                    </a>
-                                                                </li>
+                                                                <li><a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#groupageModal{{ $groupage->id }}"><i class="la la-eye"></i> Voir les détails</a></li>
                                                                 <li>
                                                                     <button class="dropdown-item ouvrir-edit-modal" data-id="{{ $groupage->id }}" data-code="{{ $groupage->code_groupage }}" data-bs-toggle="modal" data-bs-target="#editGroupageModal" type="button"><i class="la la-edit"></i> Modifier</button>
                                                                 </li>
@@ -239,7 +235,84 @@
 </div>
 {{-- modal Ajout Colis --> --}}
 
+
+
+</div>
+
 <!-- Modal voir les detail -->
+@foreach($groupages as $groupage)
+    <!-- modal -->
+    <div class="modal fade" id="groupageModal{{ $groupage->id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Détails du groupage {{ $groupage->code_groupage }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-2">
+                        <strong>Vol :</strong><br>
+                        {{ $groupage->vol ?? '-' }}
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <strong>Douanier :</strong><br>
+                        {{ $groupage->douanier ?? '-' }}
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <strong>Poids total :</strong><br>
+                        {{ $groupage->poids_total }} Kg
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <strong>Créateur :</strong><br>
+                        {{ optional($groupage->user)->name ?? 'Non défini' }} {{ optional($groupage->user)->prenom ?? 'Non défini' }}
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <strong>Date de création :</strong><br>
+                        {{ $groupage->created_at->format('d/m/Y') }}
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <strong>Statut :</strong><br>
+                        <span class="badge bg-info">
+                            {{ $groupage->statut }}
+                        </span>
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <strong>Agence de réception :</strong><br>
+                        {{ $groupage->agence->nom ?? 'Non défini' }} ({{ $groupage->agence->pays ?? 'Non défini' }})
+                    </div>
+
+                    <div class="col-md-6 mb-2">
+                        <strong>Nombre de colis :</strong><br>
+                        <span class="badge bg-info">
+                            {{ count($groupage->colis) }}
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@endforeach
+
 
 <script>
     $(document).ready(function() {

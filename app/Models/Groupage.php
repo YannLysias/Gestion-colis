@@ -22,4 +22,9 @@ class Groupage extends Model
     {
         return $this->hasMany(Colis::class, 'code_colis', 'colis_ids');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }

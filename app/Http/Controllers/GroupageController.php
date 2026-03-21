@@ -84,7 +84,10 @@ class GroupageController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $groupage = Groupage::findOrFail($id);
+        $colis = Colis::whereIn('code_colis', $groupage->colis_ids)->get();
+        return view('groupage.show_groupage', compact('groupage', 'colis'));
+        
     }
 
     /**
