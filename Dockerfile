@@ -19,7 +19,8 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 
 RUN a2enmod rewrite
 
-RUN php artisan config:cache
+# ❌ Supprimer cette ligne
+# RUN php artisan config:cache
 
 RUN chown -R www-data:www-data storage bootstrap/cache
 
