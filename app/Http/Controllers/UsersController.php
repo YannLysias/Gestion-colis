@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AgenceTransfert;
+use App\Models\TransfertArgent;
 use App\Models\Colis;
 use App\Models\User;
 use App\Models\Groupage;
@@ -146,7 +147,41 @@ public function stat()
         $statistiques[] = $colisParMois[$i] ?? 0;
     }
 
-    return view('dashboard', compact('colisEnregistres', 'topClients', 'colisEnCours', 'statCA', 'caParMois', 'caTotal', 'tauxCours', 'tauxArrivé', 'tauxAttente', 'colisLivres', 'colisEnAttente', 'colisArrive', 'secretaire', 'clients', 'agences', 'groupage', 'montantEnregistres',  'montantArrive', 'montantLivres', 'montantEnAttente', 'tauxLivraison' ,  'colisParMois', 'statistiques', 'colisAujourdHui', 'caAujourdHui'));
+
+    // ---- Statistiques globales ----
+    $transfertsTotal      = TransfertArgent::count();
+    $transfertsValides    = TransfertArgent::where('statut', 'Validé')->count();
+    $transfertsEnAttente  = TransfertArgent::where('statut', 'En_attente')->count();
+
+    $montantEnvoyeTotal        = TransfertArgent::sum('montant_a_envoyer');
+    $montantValideTotal        = TransfertArgent::where('statut', 'Validé')->sum('montant_a_envoyer');
+    $montantEnAttenteTransfert = TransfertArgent::where('statut', 'En_attente')->sum('montant_a_envoyer');
+    $fraisTotalTransfert       = TransfertArgent::sum('taxe');
+
+    // ---- Evolution mensuelle (montant envoyé par mois, année en cours) ----
+    $statTransferts = array_fill(0, 12, 0);
+
+    $parMois = TransfertArgent::selectRaw('MONTH(created_at) as mois, SUM(montant_a_envoyer) as total')
+        ->whereYear('created_at', now()->year)
+        ->groupBy('mois')
+        ->pluck('total', 'mois');
+
+    foreach ($parMois as $mois => $total) {
+        $statTransferts[$mois - 1] = (float) $total;
+    }
+
+    // ---- Top 5 clients par montant total envoyé ----
+    $topClientsTransfert = TransfertArgent::select('client_id')
+        ->selectRaw('COUNT(*) as total_transferts')
+        ->selectRaw('SUM(montant_a_envoyer) as total_montant_envoye')
+        ->selectRaw('SUM(taxe) as total_taxe')
+        ->with('client')
+        ->groupBy('client_id')
+        ->orderByDesc('total_montant_envoye')
+        ->take(5)
+        ->get();
+
+    return view('dashboard', compact('colisEnregistres', 'topClients', 'transfertsTotal', 'transfertsValides', 'transfertsEnAttente', 'montantEnvoyeTotal', 'montantValideTotal', 'montantEnAttenteTransfert', 'fraisTotalTransfert', 'statTransferts', 'topClientsTransfert', 'colisEnCours', 'statCA', 'caParMois', 'caTotal', 'tauxCours', 'tauxArrivé', 'tauxAttente', 'colisLivres', 'colisEnAttente', 'colisArrive', 'secretaire', 'clients', 'agences', 'groupage', 'montantEnregistres',  'montantArrive', 'montantLivres', 'montantEnAttente', 'tauxLivraison' ,  'colisParMois', 'statistiques', 'colisAujourdHui', 'caAujourdHui'));
 }
 
 

@@ -2,183 +2,509 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Reçu d'Expédition - Rapide Service</title>
+    <title>Reçu d'Expédition - Agence MSCJ KIN</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        :root {
+            --primary: #1a3c6e;
+            --accent: #ff7a00;
+            --success: #16a34a;
+            --gray-bg: #f4f6f9;
+            --border-soft: #e2e6ec;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            padding: 20px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--gray-bg);
+            color: #1f2733;
             font-size: 13px;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Forcer l'impression des couleurs et fonds sur tous les navigateurs */
+        html {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            color-adjust: exact;
+        }
+
+        @page {
+            size: A4;
+            margin: 8mm;
         }
 
         @media print {
-            .no-print {
-                display: none;
+            html, body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                background: #fff;
+                font-size: 11px;
             }
-        }
-        @media print {
-            .signature-zone {
-                margin-top: 80px;
+
+            .no-print { display: none; }
+
+            .receipt-wrapper {
+                box-shadow: none !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                max-width: 100% !important;
+                width: 100%;
+            }
+
+            .receipt-header { padding: 14px 20px !important; }
+            .receipt-header .logo-block img.logo { width: 45px; height: 45px; }
+            .receipt-header .company-name { font-size: 15px; }
+            .receipt-header .colis-code .code { font-size: 16px; }
+
+            .status-band { padding: 8px 20px !important; }
+            .doc-title { padding: 6px 20px 2px 20px !important; font-size: 12px !important; }
+
+            .receipt-body { padding: 12px 20px !important; }
+
+            .section-title {
+                margin-top: 12px !important;
+                margin-bottom: 8px !important;
+                padding-bottom: 4px !important;
+                font-size: 11px;
+            }
+
+            .info-grid { gap: 6px 16px !important; }
+
+            .info-item {
+                padding: 6px 10px !important;
+            }
+
+            .info-item .label { font-size: 9px; margin-bottom: 1px; }
+            .info-item .value { font-size: 11.5px; }
+            .amount-highlight .value { font-size: 13px; }
+
+            .signature-zone { margin-top: 22px !important; gap: 20px !important; }
+            .signature-box p.role { margin-bottom: 20px !important; }
+
+            .receipt-footer { padding: 10px 20px !important; }
+            .agence-block p { font-size: 10px; line-height: 1.4; }
+            .agence-block h6 { font-size: 11.5px; margin-bottom: 3px; }
+
+            .qr-block .qr-code { width: 65px; height: 65px; }
+            .qr-block .qr-caption { font-size: 8px; margin-top: 3px; }
+
+            .date-line { margin-bottom: 4px !important; }
+
+            /* Empêche toute coupure de section entre deux pages */
+            .receipt-wrapper, .receipt-body, .info-grid, .signature-zone {
+                page-break-inside: avoid;
+                break-inside: avoid;
             }
         }
 
-        .logo {
-            width: 80px;
-            height: auto;
+        .receipt-wrapper {
+            max-width: 820px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
-        .section-title {
-            font-weight: bold;
+        /* HEADER */
+        .receipt-header {
+            background: linear-gradient(135deg, var(--primary), #274b8a);
+            color: #fff;
+            padding: 28px 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .receipt-header .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .receipt-header img.logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            background: #fff;
+            padding: 4px;
+            object-fit: contain;
+        }
+
+        .receipt-header .company-name {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .receipt-header .tagline {
+            font-size: 11px;
+            opacity: 0.8;
+            margin: 0;
+        }
+
+        .receipt-header .colis-code {
+            text-align: right;
+        }
+
+        .receipt-header .colis-code .code {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .receipt-header .colis-code .code-label {
+            font-size: 10px;
             text-transform: uppercase;
-            border-bottom: 2px solid #000;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            padding-bottom: 5px;
+            opacity: 0.75;
+            letter-spacing: 1px;
         }
 
-        .info-pair {
+        .doc-title {
+            text-align: center;
+            background: #fff;
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            padding: 12px 20px 4px 20px;
+        }
+
+
+        /* STATUS BAND */
+        .status-band {
+            background: #fff7ef;
+            border-bottom: 1px solid var(--border-soft);
+            padding: 12px 35px;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            font-size: 12px;
         }
 
-        .info-pair .label {
-            font-weight: bold;
-            width: 48%;
+        .status-band .badge-statut {
+            background: var(--accent);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
         }
 
+        /* BODY */
+        .receipt-body { padding: 30px 35px; }
+
+        .section-title {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.8px;
+            color: var(--primary);
+            margin-top: 26px;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-soft);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 45px;
+            height: 2px;
+            background: var(--accent);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 24px;
+        }
+
+        .info-item {
+            background: var(--gray-bg);
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            padding: 10px 14px;
+        }
+
+        .info-item .label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #6b7686;
+            margin-bottom: 3px;
+        }
+
+        .info-item .value {
+            font-weight: 600;
+            font-size: 13.5px;
+            color: #1f2733;
+        }
+
+        .amount-highlight {
+            background: linear-gradient(135deg, #eaf1ff, #f5f9ff);
+            border: 1px solid #cfe0ff;
+        }
+
+        .amount-highlight .value {
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        /* SIGNATURES */
         .signature-zone {
-            margin-top: 40px;
+            margin-top: 45px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .signature-box {
+            flex: 1;
+            text-align: center;
+        }
+
+        .signature-box p.role {
+            font-weight: 700;
+            margin-bottom: 45px;
+            color: var(--primary);
         }
 
         .signature-line {
-            border-top: 1px solid #000;
-            width: 70%;
-            margin: 0 auto;
-            padding-top: 5px;
+            border-top: 1px solid #b8c0cc;
+            padding-top: 6px;
             font-size: 12px;
+            color: #4a5567;
         }
-        
+
+        /* FOOTER */
+        .receipt-footer {
+            background: var(--gray-bg);
+            border-top: 1px solid var(--border-soft);
+            padding: 22px 35px;
+        }
+
+        .agence-block h6 {
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .agence-block p {
+            font-size: 11.5px;
+            color: #4a5567;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .qr-block {
+            border-left: 1px dashed #c3cad5;
+            border-right: 1px dashed #c3cad5;
+        }
+
+        .qr-block .qr-code {
+            width: 90px;
+            height: 90px;
+            padding: 4px;
+            background: #fff;
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+        }
+
+        .qr-block .qr-caption {
+            font-size: 9.5px;
+            color: #6b7686;
+            margin: 6px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .date-line {
+            text-align: right;
+            font-size: 12px;
+            color: #6b7686;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .buttons-bar {
+            text-align: center;
+            padding: 25px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="text-center mb-4">
-        <img src="{{ asset('Authentification/img/Rapide service.jpg') }}" alt="Logo" class="logo">
-        <h4 class="mt-2">Fiche d'expédition - Colis N° {{ $colis->code_colis }}</h4>
-    </div>
+    <div class="receipt-wrapper">
 
-    {{-- Section Informations générales --}}
-    <div class="section-title">Informations Générales</div>
-    <div class="info-pair">
-        <div class="label">Poids : {{ $colis->poid }} kg | pour 1kg = {{ number_format($colis->prix_kilo, 0, ',', ' ') }} $</div>
-        <div class="label">Type : {{ $colis->type }}</div>
-
-    </div>
-    <div class="info-pair">
-        <div class="label">Montant : {{ number_format($colis->montant, 0, ',', ' ') }} $</div>
-        <div class="label">Paiement : {{ ucfirst($colis->paiement) }}</div>
-    </div>
-    @if($colis->paiement === 'partiel')
-        <div class="info-pair">
-            <div class="label">Montant payé : {{ number_format($colis->montant_avance, 0, ',', ' ') }} $</div>
-            <div class="label">Reste à payer : {{ number_format($colis->montant - $colis->montant_avance, 0, ',', ' ') }} $</div>
-        </div>
-    @endif
-    <div class="info-pair">
-        <div class="label">Date : {{ $colis->created_at->format('d/m/Y') }}</div>
-        <div class="label">Statut : {{ ucfirst(str_replace('_', ' ', $colis->statut)) }}</div>
-    </div>
-
-    {{-- Section Destinateur --}}
-    <div class="section-title">Destinateur</div>
-    <div class="info-pair">
-        <div class="label">Nom : {{ $colis->destinateur_nom }} {{ $colis->destinateur_prenom }}</div>
-        <div class="label">Téléphone : {{ $colis->destinateur_telephone }}</div>
-    </div>
-    <div class="info-pair">
-        <div class="label">Email : {{ $colis->destinateur_email }}</div>
-        <div class="label">Agence réception : {{ $colis->AgenceTransfert->nom ?? 'N/A' }} ({{ $colis->AgenceTransfert->pays ?? 'N/A' }})</div>
-    </div>
-
-    {{-- Section Expéditeur --}}
-    <div class="section-title">Expéditeur</div>
-    <div class="info-pair">
-        <div class="label">Nom : {{ $colis->client->name }} {{ $colis->client->prenom }}</div>
-        <div class="label">Téléphone : {{ $colis->client->telephone }}</div>
-    </div>
-    <div class="info-pair">
-        <div class="label">Email : {{ $colis->client->email }}</div>
-        <div class="label">
-            Agence :
-            @foreach($colis->client->agences as $agence)
-                {{ $agence->nom ?? 'N/A' }} ({{ $agence->pays ?? 'N/A' }})
-            @endforeach
-        </div>
-    </div>
-
-    {{-- Section Signature --}}
-    <div class="section-title">Signatures</div>
-    {{-- <div class="row signature-zone">
-        <div class="col-md-3">
-             <p class="mb-1">Client</p>
-             <div class="signature-line">Signature</div>
-        </div>
-        <div class="col-md-3">
-             <p class="mb-1">Caissier</p>
-             {{ Auth::user()->name }} {{ Auth::user()->prenom }}
-             <div class="signature-line">Signature</div>
-        </div>
-    </div> --}}
-    <div class="row signature-zone">
-        <div class="col-6 text-center">
-            <p class="mb-2"><strong>Client</strong></p>
-            <div style="height: 40px;"></div> <!-- espace pour signature -->
-            <div class="signature-line">Signature</div>
+        {{-- HEADER --}}
+        <div class="receipt-header">
+            <div class="logo-block">
+                <img src="{{ asset('Authentification/img/LogoMSCJ.jpeg') }}" alt="Logo" class="logo">
+                <div>
+                    <p class="company-name">Agence MSCJ KIN</p>
+                    <p class="tagline">Maison Sacré Coeur de Jésus</p>
+                </div>
+            </div>
+            <div class="colis-code">
+                <div class="code-label">Colis N°</div>
+                <div class="code">{{ $colis->code_colis }}</div>
+            </div>
         </div>
 
-        <div class="col-6 text-center">
-            <p class="mb-2"><strong>Caissier</strong></p>
-            
-            <div style="height: 40px;"></div>
-            <div class="signature-line"><p>{{ auth()->user()->name }} {{ auth()->user()->prenom }}</p></div>
+        {{-- TITRE DU DOCUMENT --}}
+        <div class="doc-title">Reçu d'Expédition de Colis</div>
+
+        {{-- STATUS BAND --}}
+        <div class="status-band">
+            <div>Date d'émission : <strong>{{ $colis->created_at->format('d/m/Y') }}</strong></div>
+            <div class="badge-statut">{{ ucfirst(str_replace('_', ' ', $colis->statut)) }}</div>
         </div>
-    </div>
-    @php
-        $agence = auth()->user()->agences->first();
-    @endphp
 
-    <p class="mt-2 text-end">
-        {{ $agence->ville ?? 'Ville inconnue' }},
-        le {{ now()->format('d/m/Y à H:i') }}
-    </p>
+        <div class="receipt-body">
 
-    <div class="row">
-        <div class="col-md-3">
-            <h6 class="fw-bold text-primary">RDC - Kinshasa</h6>
-            <p>
-                📍 33 Av Force publique, Direction<br>
-                Gambela C/ KASA VUBU<br>
-                ☎️ +243 893 330 999 / +243 812 715 826
+            {{-- INFOS GENERALES --}}
+            <div class="section-title">Informations Générales</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="label">Poids</span>
+                    <span class="value">{{ $colis->poid }} kg &middot; {{ number_format($colis->prix_kilo, 0, ',', ' ') }} $ / kg</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Type de colis</span>
+                    <span class="value">{{ $colis->type }}</span>
+                </div>
+                <div class="info-item amount-highlight">
+                    <span class="label">Montant total</span>
+                    <span class="value">{{ number_format($colis->montant, 0, ',', ' ') }} $</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Mode de paiement</span>
+                    <span class="value">{{ ucfirst($colis->paiement) }}</span>
+                </div>
+                @if($colis->paiement === 'partiel')
+                <div class="info-item">
+                    <span class="label">Montant payé</span>
+                    <span class="value">{{ number_format($colis->montant_avance, 0, ',', ' ') }} $</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Reste à payer</span>
+                    <span class="value">{{ number_format($colis->montant - $colis->montant_avance, 0, ',', ' ') }} $</span>
+                </div>
+                @endif
+            </div>
+
+            {{-- DESTINATAIRE --}}
+            <div class="section-title">Destinataire</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="label">Nom complet</span>
+                    <span class="value">{{ $colis->destinateur_nom }} {{ $colis->destinateur_prenom }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Téléphone</span>
+                    <span class="value">{{ $colis->destinateur_telephone }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Email</span>
+                    <span class="value">{{ $colis->destinateur_email }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Agence de réception</span>
+                    <span class="value">{{ $colis->AgenceTransfert->nom ?? 'N/A' }} ({{ $colis->AgenceTransfert->pays ?? 'N/A' }})</span>
+                </div>
+            </div>
+
+            {{-- EXPEDITEUR --}}
+            <div class="section-title">Expéditeur</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="label">Nom complet</span>
+                    <span class="value">{{ $colis->client->name }} {{ $colis->client->prenom }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Téléphone</span>
+                    <span class="value">{{ $colis->client->telephone }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Email</span>
+                    <span class="value">{{ $colis->client->email }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Agence</span>
+                    <span class="value">
+                        @foreach($colis->client->agences as $agence)
+                            {{ $agence->nom ?? 'N/A' }} ({{ $agence->pays ?? 'N/A' }})@if(!$loop->last), @endif
+                        @endforeach
+                    </span>
+                </div>
+            </div>
+
+            {{-- SIGNATURES --}}
+            <div class="section-title">Signatures</div>
+            <div class="signature-zone">
+                <div class="signature-box">
+                    <p class="role">Client</p>
+                    <div class="signature-line">Signature</div>
+                </div>
+                <div class="signature-box">
+                    <p class="role">Caissier</p>
+                    <div class="signature-line">{{ auth()->user()->name }} {{ auth()->user()->prenom }}</div>
+                </div>
+            </div>
+
+            @php
+                $agence = auth()->user()->agences->first();
+            @endphp
+            <p class="date-line mt-4">
+                Fait à {{ $agence->ville ?? 'Ville inconnue' }}, le {{ now()->format('d/m/Y à H:i') }}
             </p>
-            
         </div>
-        <div class="col-md-3">
-            <h6 class="fw-bold text-success">Bénin - Cotonou</h6>
-            <p>
-                Chez Patrick ETINA<br>
-                📍 Situé en face Nouvelle Pharmacie ADECHINA<br>
-                ☎️ +229 019 696 4338<br>
-                ✉️ patricketina20@gmail.com
-            </p>
+
+        {{-- FOOTER --}}
+        <div class="receipt-footer">
+            <div class="row align-items-center">
+                <div class="col-4 agence-block">
+                    <h6 class="text-primary">🇨🇩 RDC - Kinshasa</h6>
+                    <p>
+                        📍 Kinshasa, C/ Kasa Vubu<br>
+                        ☎️ +243 000 000 000 / +243 000 000 000
+                    </p>
+                </div>
+
+                <div class="col-4 qr-block text-center">
+                    <img class="qr-code"
+                         src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&margin=0&data={{ urlencode($colis->code_colis) }}"
+                         alt="QR Code Colis {{ $colis->code_colis }} ">
+                    <p class="qr-caption">Scanner pour suivre le colis</p>
+                </div>
+
+                <div class="col-4 agence-block">
+                    <h6 style="color: var(--success);">🇧🇯 Bénin - Cotonou</h6>
+                    <p>
+                        📍 Cotonou<br>
+                        ☎️ +229 01 00 000 0000<br>
+
+                    </p>
+                </div>
+            </div>
         </div>
-    </div>
-    {{-- <p class="small text-center">Envoyez vos colis par tout en RD Congo en toute sécurité et honnêteté</p> --}}
 
+        {{-- BOUTONS --}}
+        <div class="buttons-bar no-print">
+            <button class="btn btn-primary px-4" onclick="window.print()">🖨️ Imprimer</button>
+            <a href="{{ url()->previous() }}" class="btn btn-outline-secondary px-4">← Retour</a>
+        </div>
 
-    {{-- Boutons --}}
-    <div class="text-center no-print mt-5">
-        <button class="btn btn-primary" onclick="window.print()">Imprimer</button>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">Retour</a>
     </div>
 
 </body>

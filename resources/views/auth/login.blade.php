@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 <title>Rapide Service</title>
-<link rel="icon" href="/Authentification/img/Rapide service.jpg">
+<link rel="icon" href="/Authentification/img/logoMSCJ.jpeg">
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -58,13 +58,13 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-center">
                         <a href="index.html" class="d-flex align-items-center w-auto">
-                            <img src="/Authentification/img/Rapide service.jpg" style="width: 150px; height: 150px; object-fit:contain" alt="" class="mx-auto d-block">
+                            <img src="/Authentification/img/logoMSCJ.jpeg" style="width: 150px; height: 150px; object-fit:contain" alt="" class="mx-auto d-block">
                           <span style="color: white;"></span>
                           <span class="d-none d-lg-block"></span>
                         </a>
                       </div><!-- End Logo -->
                   <div class="pb-2">
-                    <h5 class="card-title text-center pb-0 fs-5 fw-bold" style="color: #f573a5;">Connexion</h5>
+                    <h5 class="card-title text-center text-success pb-0 fs-5 fw-bold">Connexion</h5>
                     <p class="text-center small"></p>
                   </div>
 
@@ -101,7 +101,7 @@
                     </div>
 
                     <div class="col-12 mb-3">
-                        <button class="btn btn-success w-100" style="background-color: #f573a5; border-color: #f573a5;"  type="submit">Se connecter</button>
+                        <button class="btn btn-success w-100"  type="submit">Se connecter</button>
                     </div>
 
                     <div class="col-12">

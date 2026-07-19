@@ -82,7 +82,7 @@
                                 <li class="list-group-item"><strong>Nom Expéditeur :</strong> {{ $transfert->client->name }} {{ $transfert->client->prenom }}</li>
                             </div>
                             <div class="col-md-6">
-                                @foreach($transfert->user->agences as $agence)
+                                @foreach($transfert->client->agences as $agence)
                                     <li class="list-group-item"><strong>Agence d'expédition : {{$agence->nom ?? 'N/A'}} ({{$agence->pays ?? 'N/A'}})</strong>
                                     </li>
                                 @endforeach

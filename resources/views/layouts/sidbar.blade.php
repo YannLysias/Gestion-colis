@@ -1,5 +1,5 @@
 			<div class="logo-header">
-				<img src="/Authentification/img/Rapide service.jpg" style="width: 130px; height: 50px;" alt="Rapide service" class="img-fluid">
+				<img src="/Authentification/img/LogoMSCJ.jpeg" style="width: 130px; height: 50px;" alt="MSCJ KIN" class="img-fluid">
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -72,12 +72,12 @@
 							</a>
 						</li>
                     @if (Auth::user()->role === 'Super-admin')
-						{{-- <li class="nav-item {{ request()->routeIs('transfert.list_transfert.index') ? 'active' : '' }}">
+						<li class="nav-item {{ request()->routeIs('transfert.list_transfert.index') ? 'active' : '' }}">
 							<a href="{{ route('transfert.list_transfert.index') }}">
 								<i class="la la-exchange"></i>
 								<p>Gestion des Transferts</p>
 							</a>
-						</li> --}}
+						</li>
 						<li class="nav-item {{ request()->routeIs('colis.list_colis.index') ? 'active' : '' }}">
 							<a href="{{ route('colis.list_colis.index') }}">
 								<i class="la la-truck"></i>

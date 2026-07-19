@@ -9,7 +9,7 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  
+
   <!-- Favicon-->
   <link rel="icon" href="/Acceuil/images/emblème2.jpg" type="image/x-icon" />
   <link href="/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -58,7 +58,7 @@
                   <div class="pt-2 pb-2">
                     <div class="d-flex justify-content-center">
                         <a href="index.html" class="d-flex align-items-center w-auto">
-                            <img src="/Authentification/img/sceauBenin.png" style="width: 300px; height: 150px;" alt="" class="mx-auto d-block">
+                            <img src="/Authentification/img/logoMSCJ.jpeg" style="width: 300px; height: 150px;" alt="" class="mx-auto d-block">
                             <span class="d-none d-lg-block"></span>
                         </a>
                     </div><!-- End Logo -->

@@ -2,8 +2,8 @@
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>Rapide Service</title>
-	<link rel="icon" href="/Authentification/img/Rapide service.jpg">
+	<title>MSCJ KIN</title>
+	<link rel="icon" href="/Authentification/img/LogoMSCJ.jpeg">
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
@@ -17,6 +17,8 @@
 				<div class="content">
 					<div class="container-fluid">
 						<h4 class="page-title">Dashboard</h4>
+
+						{{-- ============ BLOC COLIS ============ --}}
 						<div class="row">
 							<div class="col-md-3">
 								<div class="card card-stats card-warning">
@@ -170,8 +172,9 @@
 										</div>
 									</div>
 								</div>
-							</div> 
+							</div>
 						</div>
+
 						<div class="row">
 							<div class="col-md-3">
 								<div class="card">
@@ -203,6 +206,7 @@
 								</div>
 							</div>
 						</div>
+
 						<div class="row row-card-no-pd">
 							<div class="col-md-4">
 								<div class="card">
@@ -300,6 +304,7 @@
 								</div>
 							</div>
 						</div>
+
 						<div class="row">
 							<div class="col-md-4">
 								<div class="card">
@@ -315,7 +320,7 @@
 							<div class="col-md-8">
 								<div class="card">
 									<div class="card-header">
-										<h4 class="card-title">Chiffre d’Affaire Annuel</h4>
+										<h4 class="card-title">Chiffre d'Affaire Annuel</h4>
                                         <p class="card-category">Evolution mensuelle</p>
 									</div>
 									<div class="card-body">
@@ -355,127 +360,152 @@
 									</div>
 								</div>
 							</div>
-							{{-- <div class="col-md-6">
-								<div class="card card-tasks">
-									<div class="card-header ">
-										<h4 class="card-title">Tasks</h4>
-										<p class="card-category">To Do List</p>
-									</div>
-									<div class="card-body ">
-										<div class="table-full-width">
-											<table class="table">
-												<thead>
-													<tr>
-														<th>
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input class="form-check-input  select-all-checkbox" type="checkbox" data-select="checkbox" data-target=".task-select">
-																	<span class="form-check-sign"></span>
-																</label>
-															</div>
-														</th>
-														<th>Task</th>
-														<th>Action</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input class="form-check-input task-select" type="checkbox">
-																	<span class="form-check-sign"></span>
-																</label>
-															</div>
-														</td>
-														<td>Planning new project structure</td>
-														<td class="td-actions text-right">
-															<div class="form-button-action">
-																<button type="button" data-toggle="tooltip" title="Edit Task" class="btn btn-link <btn-simple-primary">
-																	<i class="la la-edit"></i>
-																</button>
-																<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-link btn-simple-danger">
-																	<i class="la la-times"></i>
-																</button>
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input class="form-check-input task-select" type="checkbox">
-																	<span class="form-check-sign"></span>
-																</label>
-															</div>
-														</td>
-														<td>Update Fonts</td>
-														<td class="td-actions text-right">
-															<div class="form-button-action">
-																<button type="button" data-toggle="tooltip" title="Edit Task" class="btn btn-link <btn-simple-primary">
-																	<i class="la la-edit"></i>
-																</button>
-																<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-link btn-simple-danger">
-																	<i class="la la-times"></i>
-																</button>
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input class="form-check-input task-select" type="checkbox">
-																	<span class="form-check-sign"></span>
-																</label>
-															</div>
-														</td>
-														<td>Add new Post
-														</td>
-														<td class="td-actions text-right">
-															<div class="form-button-action">
-																<button type="button" data-toggle="tooltip" title="Edit Task" class="btn btn-link <btn-simple-primary">
-																	<i class="la la-edit"></i>
-																</button>
-																<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-link btn-simple-danger">
-																	<i class="la la-times"></i>
-																</button>
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input class="form-check-input task-select" type="checkbox">
-																	<span class="form-check-sign"></span>
-																</label>
-															</div>
-														</td>
-														<td>Finalise the design proposal</td>
-														<td class="td-actions text-right">
-															<div class="form-button-action">
-																<button type="button" data-toggle="tooltip" title="Edit Task" class="btn btn-link <btn-simple-primary">
-																	<i class="la la-edit"></i>
-																</button>
-																<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-link btn-simple-danger">
-																	<i class="la la-times"></i>
-																</button>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div class="card-footer ">
-										<div class="stats">
-											<i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
+						</div>
+
+						{{-- ============ BLOC TRANSFERT D'ARGENT ============ --}}
+						<h4 class="page-title mt-4">Transferts d'Argent</h4>
+
+						<div class="row">
+							<div class="col-md-3">
+								<div class="card card-stats card-warning">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-5">
+												<div class="icon-big text-center">
+													<i class="la la-exchange"></i>
+												</div>
+											</div>
+											<div class="col-7 d-flex align-items-center">
+												<div class="numbers">
+													<p class="card-category">Total : {{ $transfertsTotal }} transferts</p>
+													<h4 class="card-category">{{ number_format($montantEnvoyeTotal, 0, ',', ' ') }} FCFA</h4>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div> --}}
+							</div>
+							<div class="col-md-3">
+								<div class="card card-stats card-success">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-5">
+												<div class="icon-big text-center">
+													<i class="la la-check-circle"></i>
+												</div>
+											</div>
+											<div class="col-7 d-flex align-items-center">
+												<div class="numbers">
+													<p class="card-category">Validés : {{ $transfertsValides }}</p>
+													<h4 class="card-category">{{ number_format($montantValideTotal, 0, ',', ' ') }} FCFA</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="card card-stats card-primary">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-5">
+												<div class="icon-big text-center">
+													<i class="la la-clock-o"></i>
+												</div>
+											</div>
+											<div class="col-7 d-flex align-items-center">
+												<div class="numbers">
+													<p class="card-category">En attente : {{ $transfertsEnAttente }}</p>
+													<h4 class="card-category">{{ number_format($montantEnAttenteTransfert, 0, ',', ' ') }} FCFA</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="card card-stats card-danger">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-5">
+												<div class="icon-big text-center">
+													<i class="la la-money"></i>
+												</div>
+											</div>
+											<div class="col-7 d-flex align-items-center">
+												<div class="numbers">
+													<p class="card-category">Frais perçus</p>
+													<h4 class="card-category">{{ number_format($fraisTotalTransfert, 0, ',', ' ') }} FCFA</h4>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
+
+						<div class="row">
+							<div class="col-md-4">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Répartition des Transferts</h4>
+										<p class="card-category">Selon le statut du retrait</p>
+									</div>
+									<div class="card-body">
+										<canvas id="statutTransfertChart"></canvas>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Evolution des Transferts d'Argent</h4>
+										<p class="card-category">Montant envoyé par mois</p>
+									</div>
+									<div class="card-body">
+										<div style="height:300px;">
+											<canvas id="evolutionTransferts"></canvas>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Top 5 Meilleurs Clients (Transferts)</h4>
+										<p class="card-category">Classement par montant total envoyé</p>
+									</div>
+									<div class="card-body">
+										<table class="table table-head-bg-success table-striped table-hover">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Client</th>
+													<th>Transferts</th>
+													<th>Montant envoyé (FCFA)</th>
+													<th>Frais générés (FCFA)</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach($topClientsTransfert as $index => $client)
+												<tr>
+													<td>{{ $index + 1 }}</td>
+													<td>{{ $client->client->name ?? 'N/A' }} {{ $client->client->prenom ?? 'N/A' }}</td>
+													<td><b>{{ $client->total_transferts }}</b></td>
+													<td>{{ number_format($client->total_montant_envoye, 0, ',', ' ') }}</td>
+													<td>{{ number_format($client->total_taxe, 0, ',', ' ') }}</td>
+												</tr>
+												@endforeach
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			     <footer class="footer">
@@ -506,7 +536,7 @@
 				</footer>
 			</div>
 		</div>
-	</div> -->
+	</div>
 
 </body>
 <script src="assets/js/core/jquery.3.2.1.min.js"></script>
@@ -617,5 +647,63 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     });
+</script>
+
+{{-- ===== CHARTS TRANSFERT D'ARGENT ===== --}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const ctxStatutTransfert = document.getElementById('statutTransfertChart');
+
+    if (ctxStatutTransfert) {
+        new Chart(ctxStatutTransfert, {
+            type: 'pie',
+            data: {
+                labels: ['Validé', 'En attente'],
+                datasets: [{
+                    data: [
+                        {{ $transfertsValides }},
+                        {{ $transfertsEnAttente }}
+                    ],
+                    backgroundColor: [
+                        '#28a745',
+                        '#ffc107'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    }
+
+    const ctxEvolutionTransfert = document.getElementById('evolutionTransferts');
+
+    if (ctxEvolutionTransfert) {
+        new Chart(ctxEvolutionTransfert, {
+            type: 'line',
+            data: {
+                labels: [
+                    "Jan", "Fév", "Mar", "Avr", "Mai", "Jun",
+                    "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc"
+                ],
+                datasets: [{
+                    label: "Montant envoyé (FCFA)",
+                    data: @json($statTransferts),
+                    borderColor: '#6d28d9',
+                    backgroundColor: 'rgba(109,40,217,0.2)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+
+});
 </script>
 </html>

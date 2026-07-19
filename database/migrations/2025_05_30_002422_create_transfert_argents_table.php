@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('destinateur_email');
             $table->string('type_piece_identite');
             $table->string('numero_piece_identite');
+            $table->enum('statut', ['En_attente', 'Validé'])->default('En_attente');
             $table->string('motif_du_transfert');
             $table->integer('numero_de_controle');
             $table->timestamps();

@@ -70,8 +70,8 @@
                                                     <div class="input-group">
                                                         <input type="number" step="0.01" name="montant_a_envoyer" id="montant_a_envoyer" class="form-control" required>
                                                         <select name="devise_envoi" class="form-select" required>
-                                                            <option value="USD">FCFA</option>
-                                                            <option value="CDF">Franc Congolais</option>
+                                                            {{-- <option value="USD">FCFA</option>
+                                                            <option value="CDF">Franc Congolais</option> --}}
                                                             <option value="XOF">Dollar USA</option>
                                                         </select>
                                                         @error('montant_a_envoyer')
@@ -100,11 +100,11 @@
                                                     <label>Montant à recevoir</label>
                                                     <div class="input-group">
                                                         <input type="number" step="0.01" name="montant_a_recevoir" id="montant_a_recevoir" class="form-control" readonly>
-                                                        <select name="devise_reception" class="form-select" required>
+                                                        {{-- <select name="devise_reception" class="form-select" required>
                                                             <option value="USD">FCFA</option>
                                                             <option value="CDF">Franc Congolais</option>
                                                             <option value="XOF">Dollar USA</option>
-                                                        </select>
+                                                        </select> --}}
                                                         @error('montant_a_recevoir')
                                                         <div class="d-block text-danger">{{$message}}</div>
                                                     @enderror

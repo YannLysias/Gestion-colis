@@ -39,9 +39,6 @@
                                         </a>
                                     </div>
 									<div class="card-body">
-										<div class="card-sub">
-											envoyez de l’argent à vos proches ou partenaires professionnels de manière rapide, fiable et accessible, même en zone rurale.
-										</div>
 										<div class="table-responsive">
 											<table class="table table-bordered">
 												<thead>
