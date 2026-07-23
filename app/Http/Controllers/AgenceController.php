@@ -54,7 +54,8 @@ class AgenceController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $agence = AgenceTransfert::findOrFail($id);
+        return view('edit_agence', compact('agence'));
     }
 
     /**
@@ -62,7 +63,8 @@ class AgenceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $agence = AgenceTransfert::findOrFail($id);
+        return view('edit_agence', compact('agence'));
     }
 
     /**
@@ -70,7 +72,16 @@ class AgenceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $agence = AgenceTransfert::findOrFail($id);
+        $agence->update([
+            'nom' => $request->nom,
+            'pays' => $request->pays,
+            'ville' => $request->ville,
+            'adresse_complete' => $request->adresse_complete,
+        ]);
+
+        return redirect('agence')->with('success', 'Agence mise à jour avec succès.');
     }
 
     /**

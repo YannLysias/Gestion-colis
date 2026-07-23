@@ -16,7 +16,7 @@
                 <div class="content">
 				<div class="container-fluid">
                 <div class="container">
-                    <h4>Détails du colis N° : {{ $colis->code_colis }}</h4>
+                    <h4>Détails du Agence</h4>
 
                     @if(session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
@@ -25,76 +25,21 @@
                     <div class="container">
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Poids :</strong> {{ $colis->poid }} kg</li>
+                                <li class="list-group-item"><strong>Nom :</strong> {{ $agence->nom }}</li>
                             </div>
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Date :</strong> {{ $colis->created_at }}</li>
-
+                                <li class="list-group-item"><strong>Ville :</strong> {{ $agence->ville }}</li>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Montant :</strong> {{ number_format($colis->montant, 0, ',', ' ') }} FCFA</li>
+                                <li class="list-group-item"><strong>Pays :</strong> {{ $agence->pays }}</li>
                             </div>
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Destinateur Email :</strong> {{ $colis->destinateur_email }}</li>
+                                <li class="list-group-item"><strong>Adresse :</strong> {{ $agence->adresse_complete }}</li>
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-
-                                <li class="list-group-item"><strong>Paiement :</strong> {{ $colis->paiement }}</li>
-
-                            </div>
-                            <div class="col-md-6">
-                                <li class="list-group-item"><strong>Destinateur Nom :</strong> {{ $colis->destinateur_nom }} {{ $colis->destinateur_prenom }}</li>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <li class="list-group-item"><strong>Statut :</strong> {{ ucfirst(str_replace('_', ' ', $colis->statut)) }}</li>
-
-                            </div>
-                            <div class="col-md-6">
-                                <li class="list-group-item"><strong>Destinateur N° téléphone:</strong> {{ $colis->destinateur_telephone }}</li>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <li class="list-group-item"><strong>Type :</strong> {{ $colis->type }}</li>
-                            </div>
-                            <div class="col-md-6">
-                                <li class="list-group-item"><strong>Agence :</strong> {{ $colis->AgenceTransfert->nom ?? 'N/A' }} ({{ $colis->AgenceTransfert->pays ?? 'N/A' }})</li>
-                            </div>
-                        </div>
-                    </div>
-
-                     <h4>Détails d'expédition</h4>
-                    <div class="container">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <li class="list-group-item"><strong>Nom Expéditeur :</strong> {{ $colis->client->name }} {{ $colis->client->prenom }}</li>
-                            </div>
-                            <div class="col-md-6">
-                                @foreach($colis->user->agences as $agence)
-                                    <li class="list-group-item"><strong>Agence d'expédition : {{$agence->nom ?? 'N/A'}} ({{$agence->pays ?? 'N/A'}})</strong>
-                                    </li>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-
-                                <li class="list-group-item"><strong>Téléphone Expéditeur :</strong> {{ $colis->client->telephone }} ({{ $colis->client->email }})</li>
-
-                            </div>
-                            <div class="col-md-6">
-                                <li class="list-group-item"><strong>Secretaire :</strong> {{ $colis->User->name }} {{ $colis->User->prenom }}</li>
-                            </div>
                         </div>
                     </div>
 
@@ -103,20 +48,17 @@
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editColisModal">
                         Modifier
                     </button>
-                    <a href="{{ route('colis.imprimer', $colis->id) }}" target="_blank" class="btn btn-success">
-                        Imprimer
-                    </a>
 
                     <!-- Modal -->
                         <!-- Modal de modification -->
                         <div class="modal fade" id="editColisModal" tabindex="-1" aria-labelledby="editColisModalLabel" aria-hidden="true">
                        <div class="modal-dialog modal-lg">
-                            <form method="POST" action="{{ route('colis.list_colis.update', $colis->id) }}">
+                            <form method="POST" action="{{ route('agence.update', $agence->id) }}">
                                 @csrf
                                 @method('PUT')
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Modifier les informations du colis</h5>
+                                        <h5 class="modal-title">Modifier les informations de l'agence</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
 
                                     </div>
@@ -124,75 +66,39 @@
                                         <div class="row g-3">
                                             <!-- Poids -->
                                             <div class="col-md-6">
-                                                <label class="form-label">Poids (kg)</label>
-                                                <input type="number" step="0.01" class="form-control" name="poid" value="{{ old('poid', $colis->poid) }}" required>
-                                                @error('poid')
+                                                <label class="form-label">Agence</label>
+                                                <input type="text" class="form-control" name="agence" value="{{ old('agence', $agence->nom) }}" required>
+                                                @error('agence')
                                                     <div class="d-block text-danger">{{$message}}</div>
                                                 @enderror
                                             </div>
 
                                             <!-- Type -->
                                             <div class="col-md-6">
-                                                <label class="form-label">Type</label>
-                                                <input type="text" class="form-control" name="type" value="{{ old('type', $colis->type) }}" required>
-                                                @error('type')
+                                                <label class="form-label">Ville</label>
+                                                <input type="text" class="form-control" name="ville" value="{{ old('ville', $agence->ville) }}" required>
+                                                @error('ville')
                                                     <div class="d-block text-danger">{{$message}}</div>
                                                 @enderror
                                             </div>
 
                                             <!-- Paiement -->
                                             <div class="col-md-6">
-                                                <label class="form-label">Paiement</label>
-                                                <select class="form-control" name="paiement" required>
-                                                    <option value="payé" @selected($colis->paiement == 'payé')>Payé</option>
-                                                    <option value="non_payé" @selected($colis->paiement == 'non_payé')>Non Payé</option>
-
+                                                <label class="form-label">Pays</label>
+                                                <select class="form-control" name="pays" required>
+                                                    <option value="RD Congo" @selected($agence->pays == 'RD Congo')>RD Congo</option>
+                                                    <option value="R. Bénin" @selected($agence->pays == 'R. Bénin')>R. Bénin</option>
                                                 </select>
-                                                @error('paiement')
+                                                @error('pays')
                                                     <div class="d-block text-danger">{{$message}}</div>
                                                 @enderror
-                                            </div>
-
-                                            <!-- Statut -->
-                                            <div class="col-md-6">
-                                                <label class="form-label">Statut</label>
-                                                <select class="form-control" name="statut">
-                                                    <option value="en_attente" @selected($colis->statut == 'en_attente')>En attente</option>
-                                                    <option value="en_cours" @selected($colis->statut == 'en_cours')>En cours</option>
-                                                    <option value="arrivé" @selected($colis->statut == 'arrivé')>Arrivé</option>
-                                                    <option value="livré" @selected($colis->statut == 'livré')>Livré</option>
-                                                </select>
                                             </div>
 
                                             <!-- Destinateur -->
                                             <div class="col-md-6">
-                                                <label class="form-label">Nom Destinateur</label>
-                                                <input type="text" class="form-control" name="destinateur_nom" value="{{ old('destinateur_nom', $colis->destinateur_nom) }}" required>
-                                                @error('destinateur_nom')
-                                                    <div class="d-block text-danger">{{$message}}</div>
-                                                @enderror
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <label class="form-label">Prénom Destinateur</label>
-                                                <input type="text" class="form-control" name="destinateur_prenom" value="{{ old('destinateur_prenom', $colis->destinateur_prenom) }}" required>
-                                                @error('destinateur_prenom')
-                                                    <div class="d-block text-danger">{{$message}}</div>
-                                                @enderror
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <label class="form-label">Email Destinateur</label>
-                                                <input type="email" class="form-control" name="destinateur_email" value="{{ old('destinateur_email', $colis->destinateur_email) }}">
-                                                @error('destinateur_email')
-                                                    <div class="d-block text-danger">{{$message}}</div>
-                                                @enderror
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <label class="form-label">Téléphone Destinateur</label>
-                                                <input type="text" class="form-control" name="destinateur_telephone" value="{{ old('destinateur_telephone', $colis->destinateur_telephone) }}" required>
-                                                @error('destinateur_telephone')
+                                                <label class="form-label">Adresse</label>
+                                                <input type="text" class="form-control" name="adresse_complete" value="{{ old('adresse_complete', $agence->adresse_complete) }}" required>
+                                                @error('adresse_complete')
                                                     <div class="d-block text-danger">{{$message}}</div>
                                                 @enderror
                                             </div>

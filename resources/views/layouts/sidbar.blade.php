@@ -72,19 +72,22 @@
 							</a>
 						</li>
                     @if (Auth::user()->role === 'Super-admin')
-						<li class="nav-item {{ request()->routeIs('transfert.list_transfert.index') ? 'active' : '' }}">
-							<a href="{{ route('transfert.list_transfert.index') }}">
-								<i class="la la-exchange"></i>
-								<p>Gestion des Transferts</p>
-							</a>
-						</li>
-						<li class="nav-item {{ request()->routeIs('colis.list_colis.index') ? 'active' : '' }}">
+
+                        <li class="nav-item {{ request()->routeIs('colis.list_colis.index') ? 'active' : '' }}">
 							<a href="{{ route('colis.list_colis.index') }}">
 								<i class="la la-truck"></i>
 								<p>Gestion des Colis</p>
 								<span class="badge badge-count"></span>
 							</a>
 						</li>
+
+						<li class="nav-item {{ request()->routeIs('transfert.list_transfert.index') ? 'active' : '' }}">
+							<a href="{{ route('transfert.list_transfert.index') }}">
+								<i class="la la-exchange"></i>
+								<p>Gestion des Transferts</p>
+							</a>
+						</li>
+
                         <li class="nav-item {{ request()->routeIs('user.admin.index') ? 'active' : '' }}">
 							<a href="{{ route('user.admin.index') }}">
 								<i class="la la-users"></i>
@@ -126,6 +129,12 @@
                             <span class="badge badge-count"></span>
                         </a>
                     </li>
+                    <li class="nav-item {{ request()->routeIs('transfert.list_transfert.index') ? 'active' : '' }}">
+							<a href="{{ route('transfert.list_transfert.index') }}">
+								<i class="la la-exchange"></i>
+								<p>Gestion des Transferts</p>
+							</a>
+						</li>
                     <li class="nav-item {{ request()->routeIs('user.user.index') ? 'active' : '' }}">
                         <a href="{{ route('user.user.index') }}">
                             <i class="la la-users"></i>

@@ -39,7 +39,7 @@
 													<tr>
 														<th>#</th>
 														<th>Agence</th>
-														<th>Vile</th>
+														<th>Ville</th>
 														<th>pays</th>
 														<th>Adresse</th>
 														<th>Action</th>
@@ -54,10 +54,10 @@
 														<td>{{$agence->pays }}</td>
 														<td>{{$agence->adresse_complete }}</td>
                                                         <td>
-                                                            <a href="#" class="btn btn-sm btn-success" title="Voir les détails">
+                                                            <a href="{{ route('agence.show', $agence->id) }}" class="btn btn-sm btn-success" title="Voir les détails">
                                                                 <i class="la la-eye"></i>
                                                             </a>
-                                                            <a href="{{ route('agence.destroy', $agence->id) }}" class="btn btn-sm btn-danger" title="Supprimer" onclick="event.preventDefault(); if(confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) { document.getElementById('delete-form-{{ $agence->id }}').submit(); }">
+                                                            <a href="{{ route('agence.destroy', $agence->id) }}" class="btn btn-sm btn-danger" title="Supprimer" onclick="event.preventDefault(); if(confirm('Êtes-vous sûr de vouloir supprimer cette agence ?')) { document.getElementById('delete-form-{{ $agence->id }}').submit(); }">
                                                                     <i class="la la-trash"></i>
                                                             </a>
                                                             <form id="delete-form-{{ $agence->id }}" action="{{ route('agence.destroy', $agence->id) }}" method="POST" style="display: none;">

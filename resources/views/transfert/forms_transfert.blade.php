@@ -89,7 +89,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>frais de livraison (8%)</label>
+                                                    <label>frais de livraison (5%)</label>
                                                     <input type="number" step="0.01" name="taxe" id="taxe" class="form-control" readonly>
                                                     @error('taxe')
                                                         <div class="d-block text-danger">{{$message}}</div>
@@ -173,7 +173,7 @@
 
                                                 <div class="form-group">
                                                     <label>Type de pièce d'identité</label>
-                                                    <select name="type_piece_identite" class="form-control" required>
+                                                    <select name="type_piece_identite" class="form-control">
                                                         <option value="">-- Choisir une pièce --</option>
                                                         <option value="Passport">Passport</option>
                                                         <option value="Carte consulaire">Carte consulaire</option>
@@ -226,7 +226,7 @@
         function updateFields() {
             const m = parseFloat(montantEnvoyer.value) || 0;
             const t = parseFloat(taux.value) || 1;
-            const tx = m * 0.08;
+            const tx = m * 0.05; // 5% de frais de livraison
             taxe.value = tx.toFixed(2);
             montantRecevoir.value = ((m - tx) * t).toFixed(2);
         }

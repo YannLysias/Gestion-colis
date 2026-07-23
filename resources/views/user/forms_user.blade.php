@@ -87,18 +87,7 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="role">Role <span style="color:red">*</span></label>
-                                                        <select name="role" class="form-control" required>
-                                                            <option value="">-- Choisir --</option>
-                                                            <option value="Client">Client</option>
-                                                        </select>
-                                                    </div>
-                                                     @error('role')
-                                                        <div class="d-block text-danger">{{$message}}</div>
-                                                    @enderror
-                                                </div>
+
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
@@ -132,7 +121,7 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="agence_id">Agence <span style="color:red">*</span></label>
                                                         <select name="agences_transfert_id" class="form-control" required>

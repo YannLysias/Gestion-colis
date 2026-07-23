@@ -11,6 +11,7 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $users = User::where('role', 'Secretaire')
@@ -46,7 +47,6 @@ public function store(Request $request)
         'sexe' => 'required|string',
         'telephone' => 'required|string',
         'email' => 'required|email|unique:users,email',
-        'role' => 'required|string',
         'adresse' => 'required|string',
         'profession' => 'required|string',
         'agences_transfert_id' => 'required|exists:agences_transfert,id',
@@ -61,7 +61,7 @@ public function store(Request $request)
         'telephone' => $request->telephone,
         'email' => $request->email,
         'password' => bcrypt('default123'),
-        'role' => $request->role,
+        'role' => 'Secretaire',
         'adresse' => $request->adresse,
         'profession' => $request->profession,
         'agences_transfert_id' => $agence->id,
@@ -70,7 +70,7 @@ public function store(Request $request)
 
     $user->agences()->attach($agence->id);
 
-        return redirect('user/user')->with('success', 'Utilisateur ajouté avec succès.');
+        return redirect('user/admin')->with('success', 'Utilisateur ajouté avec succès.');
 
 }
 
@@ -131,7 +131,7 @@ public function store(Request $request)
         // Synchroniser les agences associées
         $user->agences()->sync([$agence->id]);
 
-        return redirect('user/user')->with('success', 'Utilisateur mis à jour avec succès.');
+        return redirect('user/admin')->with('success', 'Utilisateur mis à jour avec succès.');
     }
 
     /**
@@ -139,6 +139,9 @@ public function store(Request $request)
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+
+        return redirect()->route('user.admin')->with('success', 'Utilisateur supprimé avec succès.');
     }
 }

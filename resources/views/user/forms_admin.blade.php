@@ -24,7 +24,7 @@
                                         <h4 class="card-title mb-0">Formulaire d'ajout d'un Sécretaire</h4>
                                     </div>
                                     <div class="card-body">
-                                        <form action="/user/user" method="POST">
+                                        <form action="/user/admin" method="POST">
                                             @csrf
 
                                             <div class="row">
@@ -89,19 +89,6 @@
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="role">Role <span style="color:red">*</span></label>
-                                                        <select name="role" class="form-control" required>
-                                                            <option value="">-- Choisir --</option>
-                                                            <option value="Secretaire">Secretaire</option>
-                                                        </select>
-                                                    </div>
-                                                     @error('role')
-                                                        <div class="d-block text-danger">{{$message}}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
                                                         <label for="adresse">Adresse</label>
                                                         <input type="text" name="adresse" class="form-control">
                                                     </div>
@@ -132,7 +119,7 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="col-md-12">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="agence_id">Agence <span style="color:red">*</span></label>
                                                         <select name="agences_transfert_id" class="form-control" required>
