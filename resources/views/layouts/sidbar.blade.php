@@ -1,5 +1,5 @@
 			<div class="logo-header">
-				<img src="/Authentification/img/LogoMSCJ.jpeg" style="width: 130px; height: 50px;" alt="MSCJ KIN" class="img-fluid">
+				<img src="/Authentification/img/logoMSCJ.jpeg" style="width: 130px; height: 50px;" alt="MSCJ KIN" class="img-fluid">
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>

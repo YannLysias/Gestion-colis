@@ -26,18 +26,34 @@
                                     </div>
                                 @endif
 								<div class="card">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <div class="card-title">Listes des transferts</div>
 
-                                       <div class="d-flex align-items-center">
-                                            <input type="text" id="searchNumControl" class="form-control me-2" placeholder="Numéro de contrôle" style="width: 250px;">
-                                            <button id="btnSearchTransfert" class="btn btn-success">Rechercher</button>
+                                    <div class="card-header">
+                                        <div class="row g-2 align-items-center">
+                                            <div class="col-12 col-lg-3">
+                                                <h5 class="card-title mb-0">Liste des transferts</h5>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="input-group">
+                                                    <input
+                                                        type="text"
+                                                        id="searchNumControl"
+                                                        class="form-control"
+                                                        placeholder="Numéro de contrôle">
+
+                                                    <button id="btnSearchTransfert" class="btn btn-success">
+                                                        <i class="la la-search"></i> Rechercher
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-3 text-lg-end">
+                                                <a href="/transfert/list_transfert/create" class="btn btn-primary w-100 w-lg-auto">
+                                                    <i class="la la-plus"></i> Faire un transfert
+                                                </a>
+                                            </div>
                                         </div>
-
-                                        <a href="/transfert/list_transfert/create" class="btn btn-primary">
-                                            Faire un transfert
-                                        </a>
                                     </div>
+
+
 									<div class="card-body">
 										<div class="table-responsive">
 											<table class="table table-bordered">
@@ -62,8 +78,8 @@
                                                         <td>{{ $transfert->destinateur_nom }}</td>
                                                         <td>{{ $transfert->destinateur_prenom }}</td>
                                                         <td>{{ $transfert->destinateur_telephone }}</td>
-                                                        <td>{{ $transfert->montant_a_envoyer}}</td>
-                                                        <td>{{ $transfert->montant_a_recevoir }}</td>
+                                                        <td>{{ $transfert->montant_a_envoyer}} $</td>
+                                                        <td>{{ $transfert->montant_a_recevoir }} $</td>
                                                         <td>{{ $transfert->statut }}</td>
                                                         <td>
                                                             <a href="{{ route('transfert.list_transfert.show', $transfert->id) }}" class="btn btn-sm btn-info" title="Voir les détails">

@@ -336,7 +336,7 @@
         {{-- HEADER --}}
         <div class="receipt-header">
             <div class="logo-block">
-                <img src="{{ asset('Authentification/img/LogoMSCJ.jpeg') }}" alt="Logo" class="logo">
+                <img src="/Authentification/img/logoMSCJ.jpeg" alt="Logo" class="logo">
                 <div>
                     <p class="company-name">Agence MSCJ KIN</p>
                     <p class="tagline">Maison Sacré Coeur de Jésus</p>
@@ -366,15 +366,15 @@
             <div class="info-grid">
                 <div class="info-item amount-highlight">
                     <span class="label">Montant envoyé</span>
-                    <span class="value">{{ number_format($transfert->montant_a_envoyer, 0, ',', ' ') }} FCFA</span>
+                    <span class="value">{{ number_format($transfert->montant_a_envoyer, 0, ',', ' ') }} $</span>
                 </div>
                 <div class="info-item amount-highlight recevoir">
                     <span class="label">Montant à recevoir</span>
-                    <span class="value">{{ number_format($transfert->montant_a_recevoir, 0, ',', ' ') }} FCFA</span>
+                    <span class="value">{{ number_format($transfert->montant_a_recevoir, 0, ',', ' ') }} $</span>
                 </div>
                 <div class="info-item">
                     <span class="label">Frais</span>
-                    <span class="value">{{ number_format($transfert->taxe, 0, ',', ' ') }} FCFA</span>
+                    <span class="value">{{ number_format($transfert->taxe, 0, ',', ' ') }} $</span>
                 </div>
                 <div class="info-item">
                     <span class="label">Motif</span>
@@ -452,10 +452,11 @@
         <div class="receipt-footer">
             <div class="row align-items-center">
                 <div class="col-4 agence-block">
-                    <h6 class="text-primary">🇨🇩 RDC - Kinshasa</h6>
+                    <h6 class="text-primary">RDC - Kinshasa</h6>
                     <p>
-                        📍 Kinshasa, C/ Kasa Vubu<br>
-                        ☎️ +243 000 000 000 / +243 000 000 000
+                        📍 C/bandalungwa Q/ sikine 33, av : maduda<br>
+                        ☎️ +243 892 568 961<br>
+                        ✉️ mscjkin@gmail.com
                     </p>
                 </div>
 
@@ -467,10 +468,10 @@
                 </div>
 
                 <div class="col-4 agence-block">
-                    <h6 style="color: var(--success);">🇧🇯 Bénin - Cotonou</h6>
+                    <h6 style="color: var(--success);">Bénin - Cotonou</h6>
                     <p>
-                        📍 Cotonou<br>
-                        ☎️ +229 01 00 000 0000<br>
+                        📍 Marché DANTOKPA, devant le caniveau<br>
+                        ☎️ +229 01 96 00 15 50<br>
                         ✉️ mscjkin@gmail.com
                     </p>
                 </div>

@@ -32,7 +32,7 @@
                                                 <h5 class="text-primary">Informations (expéditeur)</h5>
 
                                                 <div class="form-group">
-                                                    <label for="agence_transfert_id">Agence de réception</label>
+                                                    <label for="agence_transfert_id">Agence de réception <span style="color:red">*</span></label>
                                                     <select name="agence_transfert_id" class="form-control" required>
                                                         <option value="" disabled selected>-- Choisir une agence --</option>
                                                         @foreach ($agences as $agence)
@@ -47,7 +47,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="client_id">Sélectionner un client</label>
+                                                    <label for="client_id">Sélectionner un client <span style="color:red">*</span></label>
                                                     <select name="client_id" class="form-control" required>
                                                         <option value="" disabled selected>-- Sélectionner --</option>
                                                         @foreach ($clients as $client)
@@ -64,9 +64,9 @@
 
                                             {{-- COLONNE 2 : Détails du transfert --}}
                                             <div class="col-md-4">
-                                                <h5 class="text-primary">Montant & Détails</h5>
+                                                <h5 class="text-primary">Montant & Détails <span style="color:red">*</span></h5>
                                                 <div class="form-group">
-                                                    <label>Montant à envoyer</label>
+                                                    <label>Montant à envoyer <span style="color:red">*</span></label>
                                                     <div class="input-group">
                                                         <input type="number" step="0.01" name="montant_a_envoyer" id="montant_a_envoyer" class="form-control" required>
                                                         <select name="devise_envoi" class="form-select" required>
@@ -112,7 +112,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Motif du transfert</label>
+                                                    <label>Motif du transfert <span style="color:red">*</span></label>
                                                     <select name="motif_du_transfert" class="form-control" required>
                                                         <option value="">-- Choisir un motif --</option>
                                                         <option value="ASSISTANCE FAMILIALE">ASSISTANCE FAMILIALE</option>
@@ -140,7 +140,7 @@
                                                 <h5 class="text-primary">Informations destinataire</h5>
 
                                                 <div class="form-group">
-                                                    <label>Nom</label>
+                                                    <label>Nom <span style="color:red">*</span></label>
                                                     <input type="text" name="destinateur_nom" class="form-control" required>
                                                     @error('destinateur_nom')
                                                         <div class="d-block text-danger">{{$message}}</div>
@@ -156,7 +156,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Téléphone</label>
+                                                    <label>Téléphone <span style="color:red">*</span></label>
                                                     <input type="text" name="destinateur_telephone" class="form-control" required>
                                                     @error('destinateur_telephone')
                                                         <div class="d-block text-danger">{{$message}}</div>

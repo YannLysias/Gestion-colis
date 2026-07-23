@@ -38,7 +38,7 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <li class="list-group-item"><strong>Montant à envoyer :</strong> {{ number_format($transfert->montant_a_envoyer, 0, ',', ' ') }} FCFA</li>
+                                <li class="list-group-item"><strong>Montant à envoyer :</strong> {{ number_format($transfert->montant_a_envoyer, 0, ',', ' ') }} $</li>
                             </div>
                             <div class="col-md-6">
                                 <li class="list-group-item"><strong>Destinateur Email :</strong> {{ $transfert->destinateur_email }}</li>
@@ -48,7 +48,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
 
-                                <li class="list-group-item"><strong>Montant à recevoir :</strong> {{ number_format($transfert->montant_a_recevoir, 0, ',', ' ') }} FCFA</li>
+                                <li class="list-group-item"><strong>Montant à recevoir :</strong> {{ number_format($transfert->montant_a_recevoir, 0, ',', ' ') }} $</li>
 
                             </div>
                             <div class="col-md-6">
